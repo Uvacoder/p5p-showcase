@@ -7,7 +7,7 @@ var P5P = {
     /*
     * Flags.
     */
-    device:true,
+    device:false,
     debug:false,
     track:false,
     
