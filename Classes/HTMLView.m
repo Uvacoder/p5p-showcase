@@ -21,7 +21,7 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import "HTMLView.h"
-
+#import "Utils.h"
 
 
 /*
@@ -267,23 +267,20 @@
 /**
 * Takes a screenshot.
 */
-- (UIImage*)screenshot {
+- (UIImage*)screenshot:(BOOL)highres {
 	DLog();	
 	
 	// tha image
 	UIImage* screen = nil;
-	UIGraphicsBeginImageContext(webView.frame.size);
+    if (highres && [Utils isRetina]) {
+        UIGraphicsBeginImageContextWithOptions(webView.frame.size, NO, 2.0f);
+    } else {
+        UIGraphicsBeginImageContext(webView.frame.size);
+    }
 	[webView.layer renderInContext:UIGraphicsGetCurrentContext()];
 	screen = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
     
-    // release
-    //webView.layer.contents = nil;
-	
-	// png wrapper (better quality?)
-	//UIImage* im = [UIImage imageWithCGImage:myCGRef]; // make image from CGRef
-	//NSData* png = UIImagePNGRepresentation (screen); // get PNG representation
-	//UIImage* export = [UIImage imageWithData:png]; // wrap UIImage around PNG representation
   
 	// return
 	return screen;

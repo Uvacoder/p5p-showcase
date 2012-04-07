@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>www/skin/js/processing/processing.js</string>
+	<string>www/sketches/sketch.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,20 +21,6 @@
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>www/about.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>115</integer>
-				<key>line</key>
-				<integer>90</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>73</integer>
-		</dict>
 		<key>www/contact.html</key>
 		<dict>
 			<key>caret</key>
@@ -43,6 +29,20 @@
 				<integer>24</integer>
 				<key>line</key>
 				<integer>4</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>www/sketches/_plib/p5p.pde</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>1</integer>
+				<key>line</key>
+				<integer>16</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -247,6 +247,20 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>www/sketches/sketch.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>www/skin/css/media/mobile.css</key>
 		<dict>
 			<key>caret</key>
@@ -260,36 +274,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>55</integer>
-		</dict>
-		<key>www/skin/css/screen/general.css</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>49</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>23</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>32</integer>
-				<key>line</key>
-				<integer>52</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>49</integer>
-			</dict>
 		</dict>
 		<key>www/skin/js/jquery/jquery.plugins.js</key>
 		<dict>
@@ -333,7 +317,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>9941</integer>
+			<integer>0</integer>
 		</dict>
 		<key>www/skin/p5p.css</key>
 		<dict>
@@ -354,23 +338,40 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>15</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>183</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>150</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>31</integer>
+				<key>line</key>
+				<integer>183</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>183</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>www/about.html</string>
-		<string>www/skin/css/screen/general.css</string>
-		<string>www/skin/js/processing/processing.js</string>
 		<string>www/skin/p5p.js</string>
 		<string>www/sketches/line/_plib/line.pde</string>
+		<string>www/sketches/line/lineforline/lineforline.pde</string>
+		<string>www/skin/js/processing/processing.js</string>
+		<string>www/sketches/sketch.html</string>
+		<string>www/sketches/_plib/p5p.pde</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

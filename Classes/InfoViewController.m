@@ -417,8 +417,8 @@
 		// subject
 		[composer setToRecipients:[[[NSArray alloc] initWithObjects:vAppEmail,nil] autorelease]];
 		
-		// subject
-		[composer setSubject:[NSString stringWithFormat:@"[P5P] Feedback"]];
+		// subject        
+        [composer setSubject:[NSString stringWithFormat:@"[P5P] Feedback v%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
 	 
 		// show off
 		[self presentModalViewController:composer animated:YES];

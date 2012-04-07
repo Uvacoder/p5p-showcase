@@ -27,6 +27,7 @@
 #import "Sketch.h"
 #import "SettingGroup.h"
 #import "Setting.h"
+#import "Utils.h"
 #import "Default.h"
 #import "Tracker.h"
 
@@ -37,6 +38,7 @@
 */
 @interface SketchViewController (Helpers)
 - (void)exportSave:(id)sender;
+- (void)exportWallpaper:(id)sender;
 - (void)exportPrint:(id)sender;
 - (void)exportEmail:(id)sender;
 - (void)exportTwitter:(id)sender;
@@ -591,14 +593,12 @@ static BOOL toolbarHidden = NO;
 	
 	// export options
 	NSMutableArray *exportOptions = [[NSMutableArray alloc] init];
-	[exportOptions addObject:NSLocalizedString(@"Save",@"Save")];
-	if ([UIPrintInteractionController isPrintingAvailable]) {
-		[exportOptions addObject:NSLocalizedString(@"Print",@"Print")];
-	}
-	if ([MFMailComposeViewController canSendMail]) {
-		[exportOptions addObject:NSLocalizedString(@"Email",@"Email")];
-	}
-	[exportOptions addObject:NSLocalizedString(@"Twitter",@"Twitter")];
+	[exportOptions addObject:NSLocalizedString(@"Save as Image",@"Save as Image")];
+    if ([Utils isRetina]) {
+        [exportOptions addObject:NSLocalizedString(@"Save as Wallpaper",@"Save as Wallpaper")];
+    }
+	[exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
+	[exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
 	
 	
 	// action sheet
@@ -661,7 +661,24 @@ static BOOL toolbarHidden = NO;
 	[note showNote];
 	
 	// screenshot
-	UIImage *screenshot = [htmlView screenshot];
+	UIImage *screenshot = [htmlView screenshot:NO];
+	
+	// save image
+	UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+- (void)exportWallpaper:(id)sender {
+	DLog();
+	
+	// track
+	[Tracker trackEvent:TEventExport action:@"Wallpaper" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
+	
+	
+	// note
+	[note noteActivity:@"Capture Screenshot..."];
+	[note showNote];
+	
+	// screenshot
+	UIImage *screenshot = [htmlView screenshot:YES];
 	
 	// save image
 	UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
@@ -714,7 +731,7 @@ static BOOL toolbarHidden = NO;
 		[note showNote];
 	
 		// screenshot
-		UIImage *screenshot = [htmlView screenshot];
+		UIImage *screenshot = [htmlView screenshot:NO];
 		
 		// print controller
 		UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
@@ -797,7 +814,7 @@ static BOOL toolbarHidden = NO;
 		}
 	
 		// screenshot
-		UIImage *screenshot = [htmlView screenshot];
+		UIImage *screenshot = [htmlView screenshot:NO];
 		
 		// modal mode
 		[self setModeModal:YES]; // avoids unload in case view is hidden
@@ -850,7 +867,7 @@ static BOOL toolbarHidden = NO;
 	[Tracker trackEvent:TEventExport action:@"Twitter" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
 	
 	// screenshot
-	UIImage *screenshot = [htmlView screenshot];
+	UIImage *screenshot = [htmlView screenshot:NO];
 	
 	// modal mode
 	[self setModeModal:YES]; // avoids unload in case view is hidden
@@ -1045,29 +1062,27 @@ static BOOL toolbarHidden = NO;
 	// sender
 	UIBarButtonItem *exportButton = [toolbar.items objectAtIndex:7];
 	
-	// readjust index
-	if (! [UIPrintInteractionController isPrintingAvailable] && buttonIndex > 0) {
-		buttonIndex++;
-	}
-	if (! [MFMailComposeViewController canSendMail] && buttonIndex > 0) {
-		buttonIndex++;
-	}
-	
+    
+    // index
+    int indx = buttonIndex;
+    if (indx >= 1 && ! [Utils isRetina]) {
+        indx++;
+    }
 	
 	// save
-    if (buttonIndex == 0) {
+    if (indx == 0) {
 		[self exportSave:exportButton];
     }
-	// print
-    else if (buttonIndex == 1) {
-		[self exportPrint:exportButton];
-    } 
+    // wallpaper
+    else if (indx == 1) {
+		[self exportWallpaper:exportButton];
+    }
 	// email
-	else if (buttonIndex == 2) {
+	else if (indx == 2) {
 		[self exportEmail:exportButton];
     }
 	// twitter
-	else if (buttonIndex == 3) {
+	else if (indx == 3) {
 		[self exportTwitter:exportButton];
     }
 	

@@ -82,7 +82,7 @@
 - (BOOL)updatePage;
 - (BOOL)unloadPage;
 - (BOOL)reloadPage;
-- (UIImage*)screenshot;
+- (UIImage*)screenshot:(BOOL)highres;
 - (void)dispatchEvent:(NSString*)type data:(NSString*)dta;
 - (NSDictionary*) deviceProperties;
 - (NSDictionary*) userDefaults;
