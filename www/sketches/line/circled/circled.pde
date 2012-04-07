@@ -20,6 +20,8 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
 
 // fields
 Circle[] circles;
@@ -46,6 +48,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -120,7 +125,7 @@ void reset() {
 	// sketch
 	noFill();
 	stroke(c);
-	strokeWeight(1);
+	strokeWeight(dpr*0.75);
 	
 	// static
 	if (! defaults.live) {

@@ -23,6 +23,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // fields
 int cycle;
 float[] px,py,cx1,cy1,cx2,cy2;
@@ -46,6 +49,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -157,7 +163,7 @@ void reset() {
 	background(bg);
 	noFill();
     stroke(c);
-	strokeWeight(0);
+	strokeWeight(dpr*0.75);
 	strokeCap(ROUND);
 	
 }

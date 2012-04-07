@@ -178,7 +178,7 @@
             <SettingGroup gid="sketch" name="Sketch" sort="1">
                 <Setting key="interaction" label="Interaction" value="auto" type="picker" options="{'picker':[{'label':'Auto','value':'auto'},{'label':'Touch','value':'touch'}]}" live="YES" sort="1"/>
                 <Setting key="color" label="Color" value="{}" type="color" options="{}" live="YES" sort="2"/>
-				<Setting key="module" label="Module" value="module_vertex" type="picker" options="{'picker':[{'label':'Vertex','value':'module_vertex'},{'label':'Bezier','value':'module_bezier'},{'label':'Draw','value':'module_draw'}]}" live="NO" sort="3"/>
+				<Setting key="module" label="Module" value="module_vertex" type="picker" options="{'picker':[{'label':'Vertex','value':'module_vertex'},{'label':'Random','value':'module_random'},{'label':'Draw','value':'module_draw'}]}" live="NO" sort="3"/>
 			</SettingGroup>
             <SettingGroup gid="boids" name="Boids" sort="2">
                 <Setting key="boids_nb" label="Number" value="{'rmin':4,'rmax':8,'min':4,'max':24}" type="range" options="" live="NO" sort="1"/>

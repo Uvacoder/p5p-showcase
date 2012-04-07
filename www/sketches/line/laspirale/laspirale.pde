@@ -28,6 +28,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // parameters
 float fx, fy, mfx, mfy;
 float phix, phiy;
@@ -54,11 +57,14 @@ void setup() {
 	
 	// font
 	PFont font = loadFont("Helvetica");
-	textFont(font, 15);
+	textFont(font, deviceRetina() ? 30 : 15);
 	
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -90,6 +96,7 @@ void settings() {
     if (defaults.color.rgb) {
         c = colors.dcolor(defaults.color);
     }
+    
 }
 
 /*
@@ -133,14 +140,14 @@ void reset() {
 	
 	// lpoints
 	current = 0;
-	total = (int) random(300,900);
+	total = (int) random(600,1300);
 	if (mode_2) {
-		total = (int) random(90,120);
+		total = (int) random(90,150);
 	}
 	span = random(total*0.3,total*0.9);
 	r = random(width/4,width/2);
 	b = (int)random(60);
-	factor = width*(random(0.25,0.375));
+	factor = width*(random(0.25,0.4));
 	lpoints = new PVector[total];
 	for (int p = 0; p <= total; p++) {
 		
@@ -162,8 +169,8 @@ void reset() {
 		sinfo = width/2.0;
 	}
     
-	txinfo = (width/2.0)-sinfo/2.0+20;
-	tyinfo = (height/2.0)-45;
+	txinfo = (width/2.0)-sinfo/2.0+20*dpr;
+	tyinfo = (height/2.0)-45*dpr;
     
     // state
     drawing = true;
@@ -231,18 +238,18 @@ PVector lissajous(int p) {
 void displayInfo() {
     
 
-        // rect
-        fill(0,90);
-        noStroke();
-        rect((width/2.0)-sinfo/2.0,(height/2.0)-sinfo/2.0,sinfo,sinfo);
-        fill(255);
-        text("Frequency X " + fx,txinfo,tyinfo);
-        text("Frequency Y " + fy,txinfo,tyinfo+20);
-        text("Phase X " + phix,txinfo,tyinfo+40);
-        text("Phase Y " + phiy,txinfo,tyinfo+60);
-        text("Modulation X " + mfx,txinfo,tyinfo+80);
-        text("Modulation Y " + mfy,txinfo,tyinfo+100);
-        noFill();
+    // rect
+    fill(0,90);
+    noStroke();
+    rect((width/2.0)-sinfo/2.0,(height/2.0)-sinfo/2.0,sinfo,sinfo);
+    fill(255);
+    text("Frequency X " + fx,txinfo,tyinfo);
+    text("Frequency Y " + fy,txinfo,tyinfo+20*dpr);
+    text("Phase X " + phix,txinfo,tyinfo+40*dpr);
+    text("Phase Y " + phiy,txinfo,tyinfo+60*dpr);
+    text("Modulation X " + mfx,txinfo,tyinfo+80*dpr);
+    text("Modulation Y " + mfy,txinfo,tyinfo+100*dpr);
+    noFill();
 
     
 }
@@ -271,7 +278,7 @@ void draw() {
         if (mode_1) {
             
             // figure
-            strokeWeight(1);
+            strokeWeight(1*dpr);
             beginShape();
             for (int i=0; i<=total; i++){
                 
@@ -293,7 +300,7 @@ void draw() {
                 float d = PVector.dist(lpoints[i1].pos, lpoints[i2].pos);
                 float a = pow(1/(d/r+1), 3);
                 stroke(c,a*255);
-                strokeWeight((i/span)*2);
+                strokeWeight((i/span)*2*dpr);
                 bezier(lpoints[i1].pos.x, lpoints[i1].pos.y,lpoints[c1].pos.x, lpoints[c1].pos.y, lpoints[i2].pos.x, lpoints[i2].pos.y, lpoints[c2].pos.x, lpoints[c2].pos.y);
             }
             

@@ -15,6 +15,13 @@ boolean deviceIPhone() {
 	}
 	return iphone;
 }
+boolean deviceRetina() {
+	boolean retina = false;
+	if (DeviceSettings && DeviceSettings.retina && DeviceSettings.retina == "yup") {
+		retina = true;
+	}
+	return retina;
+}
 
 /*
 * Motion Tools.

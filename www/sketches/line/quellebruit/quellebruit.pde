@@ -25,6 +25,8 @@ var	defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
 
 // parameterize
 boolean mode2;
@@ -54,6 +56,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
   
 	// settings & reset
 	settings();
@@ -119,8 +124,7 @@ void reset() {
 
 	// fill
 	sa = random(30,90);
-	sw = random(0.3,1.5);
-
+	sw = random(0.3,1.5)*dpr;
 	
 	// agents
 	nb = 0;

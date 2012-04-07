@@ -160,6 +160,20 @@
 		18F10C6F13328AE700A3D84E /* sample_selected.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18F10C6D13328AE700A3D84E /* sample_selected.wav */; };
 		18F22BE613C5A87F005BC007 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 18F22BE513C5A87F005BC007 /* COPYING */; };
 		18F22BE813C5A89F005BC007 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 18F22BE713C5A89F005BC007 /* README */; };
+		18F837AB15308C61000E4E5F /* sketch_line_agentc@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F8379F15308C61000E4E5F /* sketch_line_agentc@2x.jpg */; };
+		18F837AC15308C61000E4E5F /* sketch_line_bitbybit@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A015308C61000E4E5F /* sketch_line_bitbybit@2x.jpg */; };
+		18F837AD15308C61000E4E5F /* sketch_line_bodegabay@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A115308C61000E4E5F /* sketch_line_bodegabay@2x.jpg */; };
+		18F837AE15308C61000E4E5F /* sketch_line_circled@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A215308C61000E4E5F /* sketch_line_circled@2x.jpg */; };
+		18F837AF15308C61000E4E5F /* sketch_line_inrecursion@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A315308C61000E4E5F /* sketch_line_inrecursion@2x.jpg */; };
+		18F837B015308C61000E4E5F /* sketch_line_laspirale@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A415308C61000E4E5F /* sketch_line_laspirale@2x.jpg */; };
+		18F837B115308C61000E4E5F /* sketch_line_lineforline@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A515308C61000E4E5F /* sketch_line_lineforline@2x.jpg */; };
+		18F837B215308C61000E4E5F /* sketch_line_qubism@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A615308C61000E4E5F /* sketch_line_qubism@2x.jpg */; };
+		18F837B315308C61000E4E5F /* sketch_line_quellebruit@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A715308C61000E4E5F /* sketch_line_quellebruit@2x.jpg */; };
+		18F837B415308C61000E4E5F /* sketch_line_shapeon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A815308C61000E4E5F /* sketch_line_shapeon@2x.jpg */; };
+		18F837B515308C61000E4E5F /* sketch_line_strangeattractor@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837A915308C61000E4E5F /* sketch_line_strangeattractor@2x.jpg */; };
+		18F837B615308C61000E4E5F /* sketch_line_stuckonrepeat@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18F837AA15308C61000E4E5F /* sketch_line_stuckonrepeat@2x.jpg */; };
+		18F837B91530C576000E4E5F /* colorPickerKnob@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F837B71530C576000E4E5F /* colorPickerKnob@2x.png */; };
+		18F837BA1530C576000E4E5F /* pickerColorWheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F837B81530C576000E4E5F /* pickerColorWheel@2x.png */; };
 		18F94DDE131FCFFB00BB1A83 /* CellPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F94DDD131FCFFB00BB1A83 /* CellPicker.m */; };
 		18F94E5E131FD8CA00BB1A83 /* CellPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F94E5D131FD8CA00BB1A83 /* CellPickerViewController.m */; };
 		18F9518D13201A8900BB1A83 /* slider_handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 18F9518B13201A8900BB1A83 /* slider_handle.png */; };
@@ -411,6 +425,20 @@
 		18F22BE513C5A87F005BC007 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		18F22BE713C5A89F005BC007 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		18F22BE913C5AD9B005BC007 /* APIKeys_template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIKeys_template.h; sourceTree = "<group>"; };
+		18F8379F15308C61000E4E5F /* sketch_line_agentc@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_agentc@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_agentc@2x.jpg"; sourceTree = "<group>"; };
+		18F837A015308C61000E4E5F /* sketch_line_bitbybit@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_bitbybit@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_bitbybit@2x.jpg"; sourceTree = "<group>"; };
+		18F837A115308C61000E4E5F /* sketch_line_bodegabay@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_bodegabay@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_bodegabay@2x.jpg"; sourceTree = "<group>"; };
+		18F837A215308C61000E4E5F /* sketch_line_circled@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_circled@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_circled@2x.jpg"; sourceTree = "<group>"; };
+		18F837A315308C61000E4E5F /* sketch_line_inrecursion@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_inrecursion@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_inrecursion@2x.jpg"; sourceTree = "<group>"; };
+		18F837A415308C61000E4E5F /* sketch_line_laspirale@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_laspirale@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_laspirale@2x.jpg"; sourceTree = "<group>"; };
+		18F837A515308C61000E4E5F /* sketch_line_lineforline@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_lineforline@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_lineforline@2x.jpg"; sourceTree = "<group>"; };
+		18F837A615308C61000E4E5F /* sketch_line_qubism@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_qubism@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_qubism@2x.jpg"; sourceTree = "<group>"; };
+		18F837A715308C61000E4E5F /* sketch_line_quellebruit@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_quellebruit@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_quellebruit@2x.jpg"; sourceTree = "<group>"; };
+		18F837A815308C61000E4E5F /* sketch_line_shapeon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_shapeon@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_shapeon@2x.jpg"; sourceTree = "<group>"; };
+		18F837A915308C61000E4E5F /* sketch_line_strangeattractor@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_strangeattractor@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_strangeattractor@2x.jpg"; sourceTree = "<group>"; };
+		18F837AA15308C61000E4E5F /* sketch_line_stuckonrepeat@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "sketch_line_stuckonrepeat@2x.jpg"; path = "www/sketches/line/_assets/sketch_line_stuckonrepeat@2x.jpg"; sourceTree = "<group>"; };
+		18F837B71530C576000E4E5F /* colorPickerKnob@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "colorPickerKnob@2x.png"; path = "ColorPicker/colorPickerKnob@2x.png"; sourceTree = "<group>"; };
+		18F837B81530C576000E4E5F /* pickerColorWheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pickerColorWheel@2x.png"; path = "ColorPicker/pickerColorWheel@2x.png"; sourceTree = "<group>"; };
 		18F94DDC131FCFFB00BB1A83 /* CellPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPicker.h; sourceTree = "<group>"; };
 		18F94DDD131FCFFB00BB1A83 /* CellPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellPicker.m; sourceTree = "<group>"; };
 		18F94E5C131FD8CA00BB1A83 /* CellPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellPickerViewController.h; sourceTree = "<group>"; };
@@ -622,7 +650,6 @@
 				18A77AB2138533180009A13A /* cells */,
 				18F10C6B13328AD800A3D84E /* samples */,
 				18F9518613201A5700BB1A83 /* doubleslider */,
-				184CF9E91316863400E5D6F9 /* collections */,
 				18E8B957130EB5F600DEB36F /* icons */,
 				18830253130DACDF009A6939 /* backgrounds */,
 				18535337130D669900BD54E3 /* aqgrid */,
@@ -638,13 +665,6 @@
 				1840690E1304405600A73515 /* MainWindow_iPhone.xib */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		184CF9E91316863400E5D6F9 /* collections */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = collections;
 			sourceTree = "<group>";
 		};
 		184CFBD31316AA1B00E5D6F9 /* Constants */ = {
@@ -727,17 +747,29 @@
 			children = (
 				18A77AAC1385321D0009A13A /* collection_line.png */,
 				18A77A94138531310009A13A /* sketch_line_agentc.jpg */,
+				18F8379F15308C61000E4E5F /* sketch_line_agentc@2x.jpg */,
 				18A77A95138531310009A13A /* sketch_line_bitbybit.jpg */,
+				18F837A015308C61000E4E5F /* sketch_line_bitbybit@2x.jpg */,
 				18A77A96138531310009A13A /* sketch_line_bodegabay.jpg */,
+				18F837A115308C61000E4E5F /* sketch_line_bodegabay@2x.jpg */,
 				18A77A97138531310009A13A /* sketch_line_circled.jpg */,
+				18F837A215308C61000E4E5F /* sketch_line_circled@2x.jpg */,
 				18A77A98138531310009A13A /* sketch_line_inrecursion.jpg */,
+				18F837A315308C61000E4E5F /* sketch_line_inrecursion@2x.jpg */,
 				18A77A99138531310009A13A /* sketch_line_laspirale.jpg */,
+				18F837A415308C61000E4E5F /* sketch_line_laspirale@2x.jpg */,
 				18A77A9A138531310009A13A /* sketch_line_lineforline.jpg */,
+				18F837A515308C61000E4E5F /* sketch_line_lineforline@2x.jpg */,
 				18A77A9B138531310009A13A /* sketch_line_qubism.jpg */,
+				18F837A615308C61000E4E5F /* sketch_line_qubism@2x.jpg */,
 				18A77A9C138531310009A13A /* sketch_line_quellebruit.jpg */,
+				18F837A715308C61000E4E5F /* sketch_line_quellebruit@2x.jpg */,
 				18A77A9D138531310009A13A /* sketch_line_shapeon.jpg */,
+				18F837A815308C61000E4E5F /* sketch_line_shapeon@2x.jpg */,
 				18A77A9E138531310009A13A /* sketch_line_strangeattractor.jpg */,
+				18F837A915308C61000E4E5F /* sketch_line_strangeattractor@2x.jpg */,
 				18A77A9F138531310009A13A /* sketch_line_stuckonrepeat.jpg */,
+				18F837AA15308C61000E4E5F /* sketch_line_stuckonrepeat@2x.jpg */,
 			);
 			name = assets;
 			sourceTree = "<group>";
@@ -842,10 +874,12 @@
 				18B5E12C13BDA89D00366FD2 /* CMColorPickerHSWheel.m */,
 				18B5E12D13BDA89D00366FD2 /* CMColorPickerSliderGradient.h */,
 				18B5E12E13BDA89D00366FD2 /* CMColorPickerSliderGradient.m */,
-				18B5E12F13BDA89D00366FD2 /* colorPickerKnob.png */,
 				18B5E13013BDA89D00366FD2 /* HSV.c */,
 				18B5E13113BDA89D00366FD2 /* HSV.h */,
+				18B5E12F13BDA89D00366FD2 /* colorPickerKnob.png */,
+				18F837B71530C576000E4E5F /* colorPickerKnob@2x.png */,
 				18B5E13213BDA89D00366FD2 /* pickerColorWheel.png */,
+				18F837B81530C576000E4E5F /* pickerColorWheel@2x.png */,
 			);
 			name = ColorPicker;
 			sourceTree = "<group>";
@@ -1170,6 +1204,20 @@
 				18E95443152F49FD0066BED7 /* Icon-Small.png in Resources */,
 				18E95444152F49FD0066BED7 /* Icon-Small@2x.png in Resources */,
 				18E95445152F49FD0066BED7 /* iTunesArtwork@2x in Resources */,
+				18F837AB15308C61000E4E5F /* sketch_line_agentc@2x.jpg in Resources */,
+				18F837AC15308C61000E4E5F /* sketch_line_bitbybit@2x.jpg in Resources */,
+				18F837AD15308C61000E4E5F /* sketch_line_bodegabay@2x.jpg in Resources */,
+				18F837AE15308C61000E4E5F /* sketch_line_circled@2x.jpg in Resources */,
+				18F837AF15308C61000E4E5F /* sketch_line_inrecursion@2x.jpg in Resources */,
+				18F837B015308C61000E4E5F /* sketch_line_laspirale@2x.jpg in Resources */,
+				18F837B115308C61000E4E5F /* sketch_line_lineforline@2x.jpg in Resources */,
+				18F837B215308C61000E4E5F /* sketch_line_qubism@2x.jpg in Resources */,
+				18F837B315308C61000E4E5F /* sketch_line_quellebruit@2x.jpg in Resources */,
+				18F837B415308C61000E4E5F /* sketch_line_shapeon@2x.jpg in Resources */,
+				18F837B515308C61000E4E5F /* sketch_line_strangeattractor@2x.jpg in Resources */,
+				18F837B615308C61000E4E5F /* sketch_line_stuckonrepeat@2x.jpg in Resources */,
+				18F837B91530C576000E4E5F /* colorPickerKnob@2x.png in Resources */,
+				18F837BA1530C576000E4E5F /* pickerColorWheel@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

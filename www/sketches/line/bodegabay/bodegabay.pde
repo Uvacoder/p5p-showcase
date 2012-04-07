@@ -20,16 +20,19 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
 
 // fields
 color bg,c;
 float maxalpha;
 float df;
+float mrnd;
 ArrayList swarm;
 int total;
 PVector mover,destination;
 boolean module_vertex;
-boolean module_bezier;
+boolean module_random;
 boolean module_draw;
 boolean module_debug;
 boolean ia_touch;
@@ -37,7 +40,6 @@ boolean ia_touch;
 // draw
 ArrayList memory;
 int lag;
-
 
 
 
@@ -54,6 +56,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -103,13 +108,12 @@ void reset() {
     total = (int) random(defaults.boids_nb.rmin,defaults.boids_nb.rmax);
     
     // module
-    module_bezier = false;
+    module_random = false;
     module_vertex = false;
     module_draw = false;
     module_debug = false;
-    if (defaults.module == "module_bezier") {
-        module_bezier = true;
-        total *= 2;
+    if (defaults.module == "module_random") {
+        module_random = true;
     }
     else if (defaults.module == "module_vertex") {
         module_vertex = true;
@@ -121,6 +125,8 @@ void reset() {
         module_debug = true;
     }
     
+    // max random
+    mrnd = pow(2,(int)random(3,12));
     
     // draw
 	memory = new ArrayList();
@@ -147,6 +153,7 @@ void reset() {
     
     // sketch
     stroke(color(c,100));
+    strokeWeight(dpr*0.75);
     maxalpha = random(180,210);
     df = width/50;
     noFill();
@@ -181,39 +188,8 @@ void draw() {
     }
    
     
-    // bezier
-    if (module_bezier) {
-        
-        // update
-        for (int i = 0; i < total; i+=2) {
-            
-            // birdie
-            Birdie birdie1 = (Birdie) swarm.get(i);
-            Birdie birdie2 = (Birdie) swarm.get((i+1)%total);
-            Birdie control1 = (Birdie) swarm.get((i+2)%total);
-            Birdie control2 = (Birdie) swarm.get((i+3)%total);
-            
-            
-            // flock
-            birdie1.flock(swarm,mover);
-            birdie1.update();
-            birdie2.flock(swarm,mover);
-            birdie2.update();
-            
-            
-            // birdie nam nam
-            float d = PVector.dist(birdie1.loc, birdie2.loc);
-            float a = pow(1/(d/df), 2);
-            stroke(c,a*255);
-            bezier(birdie1.loc.x,birdie1.loc.y,control1.loc.x,control1.loc.y,control2.loc.x,control2.loc.y,birdie2.loc.x,birdie2.loc.y);
-            line(birdie1.loc.x,birdie1.loc.y,birdie1.ploc.x,birdie1.ploc.y);
-        }
-        
-        
-    }
-    
     // vertex
-    else if (module_vertex) {
+    if (module_vertex) {
         
         
         // update
@@ -242,6 +218,46 @@ void draw() {
             }
             curveVertex(points[0].x,points[0].y);
             curveVertex(points[1].x,points[1].y);
+            endShape();
+            
+        }
+        
+        
+    }
+    
+    // modified random
+    else if (module_random) {
+        
+        
+        // update
+        int pnb = total;
+        for (int i = 0; i < total; i+=pnb) {
+            
+            // circle
+            PVector points = new PVector[pnb];
+            for (int j = 0; j < pnb; j++) {
+                Birdie birdie = (Birdie) swarm.get(i+j);
+                birdie.flock(swarm,mover);
+                birdie.update();
+                points[j] = new PVector(birdie.loc.x,birdie.loc.y);
+            }
+            
+            // stroke
+            float d = PVector.dist(points[0], points[pnb-1]);
+            float a = pow(d/height, 1.5);
+            stroke(c,a*maxalpha);
+            
+            // random
+            float rnd = random((width/mrnd)*2);
+            
+            // shape
+            beginShape();
+            vertex(points[pnb-1].x,points[pnb-1].y);
+            for (int j = 0; j < pnb; j++) {
+                bezierVertex(points[j].x+random(-rnd,rnd),points[j].y+random(-rnd,rnd),points[j].x+random(-rnd,rnd),points[j].y+random(-rnd,rnd),points[j].x,points[j].y);
+            }
+            bezierVertex(points[0].x+random(-rnd,rnd),points[0].y+random(-rnd,rnd),points[0].x+random(-rnd,rnd),points[0].y+random(-rnd,rnd),points[0].x,points[0].y);
+            bezierVertex(points[1].x+random(-rnd,rnd),points[1].y+random(-rnd,rnd),points[1].x+random(-rnd,rnd),points[1].y+random(-rnd,rnd),points[1].x,points[1].y);
             endShape();
             
         }
@@ -462,7 +478,7 @@ public class Birdie  {
     PVector separate (ArrayList birds) {
         
         // vars
-        float desiredseparation = width/10;//20.0;
+        float desiredseparation = width/4;//20.0;
         PVector steer = new PVector(0,0,0);
         int count = 0;
         

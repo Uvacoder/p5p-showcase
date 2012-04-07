@@ -23,6 +23,8 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
 
 // parameterize
 float radius = 60;
@@ -52,6 +54,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -146,7 +151,7 @@ void reset() {
     // sketch
 	background(bg);
 	noFill();
-	strokeWeight(sw);
+	strokeWeight(sw*dpr);
 	curveTightness(ct);
 	
 }

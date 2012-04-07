@@ -30,6 +30,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // parameterize
 int maxBits;
 ArrayList dirs;
@@ -54,6 +57,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -192,7 +198,7 @@ void draw() {
 			
 			// add bit
 			tree.branch.saveBit();
-            rect(tree.branch.cx,tree.branch.cy,1,1);
+            rect(tree.branch.cx,tree.branch.cy,dpr*0.75,dpr*0.75);
             
 		}
 		// branch

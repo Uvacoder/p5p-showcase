@@ -16,6 +16,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+float sf;
 
 // fields
 int cycle;
@@ -27,8 +30,6 @@ float cwidth,cheight;
 color bg;
 color c;
 float offset;
-
-
 
 
 /*
@@ -44,6 +45,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -142,6 +146,9 @@ void reset() {
 		}
 	}
 	offset = (height-(maxy-miny))/6.0;
+    
+    // scale factor
+    sf = (deviceIPad() && deviceRetina()) ? 2 : 1;
 
 	
 	// sketch
@@ -150,7 +157,6 @@ void reset() {
 	
 	noFill();
 	stroke(c);
-	strokeWeight(1);
 	strokeCap(ROUND);
 
 }
@@ -170,6 +176,7 @@ void draw() {
 	translate(0,offset);
 	
 	// shapes
+    strokeWeight(1.5*sf);
 	for (int sy = 6; sy < cny-6; sy+=4) {
 		for (int sx = 1; sx < cnx-2; sx+=1) {
 			
@@ -224,7 +231,7 @@ void draw() {
 			PVector ptr3 = points[sy-1][sx+1];
 			
 			// shape
-			strokeWeight(2);
+			strokeWeight(2*sf);
 			beginShape();
 			vertex(ptl1.x,ptl1.y);
 			vertex(ptl2.x,ptl2.y);
@@ -233,7 +240,7 @@ void draw() {
 			endShape(CLOSE);
 			
 			// lines
-			strokeWeight(1);
+			strokeWeight(1.5*sf);
 			for (int l = 1; l < nbl && l < cycle; l++) {
 				float d = l/(float)nbl;
 				float x1 = lerp(ptl2.x,ptl3.x,d);
@@ -256,7 +263,7 @@ void draw() {
 			PVector pbr3 = points[sy+2][sx];
 			
 			// shape
-			strokeWeight(2);
+			strokeWeight(2*sf);
 			beginShape();
 			vertex(pr1.x,pr1.y);
 			vertex(pr2.x,pr2.y);
@@ -265,7 +272,7 @@ void draw() {
 			endShape(CLOSE);
 			
 			// lines
-			strokeWeight(1);
+			strokeWeight(1.5*sf);
 			for (int l = 1; l < nbl && l < cycle; l++) {
 				float d = l/(float)nbl;
 				float x1 = lerp(pr2.x,pr3.x,d);
@@ -288,7 +295,7 @@ void draw() {
 			PVector pl3 = points[sy-1][sx];
 			
 			// shape
-			strokeWeight(2);
+			strokeWeight(2*sf);
 			beginShape();
 			vertex(pbl1.x,pbl1.y);
 			vertex(pbl2.x,pbl2.y);
@@ -297,7 +304,7 @@ void draw() {
 			endShape(CLOSE);
 			
 			// lines
-			strokeWeight(1);
+			strokeWeight(1.5*sf);
 			for (int l = 1; l < nbl && l < cycle; l++) {
 				float d = l/(float)nbl;
 				float x1 = lerp(pbl1.x,pbl2.x,d);

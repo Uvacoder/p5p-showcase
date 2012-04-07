@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>www/skin/js/jquery/jquery.ios.js</string>
+	<string>www/skin/js/processing/processing.js</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -252,14 +252,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>54</integer>
 				<key>line</key>
-				<integer>8055</integer>
+				<integer>8054</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>8030</integer>
+			<integer>8031</integer>
 		</dict>
 		<key>www/skin/p5p.css</key>
 		<dict>
@@ -299,6 +299,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{390, 24}, {1419, 968}}</string>
+	<string>{{390, 17}, {1419, 968}}</string>
 </dict>
 </plist>

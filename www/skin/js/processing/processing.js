@@ -8053,7 +8053,6 @@
       }
     }
     function updateMousePosition(curElement, event) { 
-	  //console.log("p.devicePixelRatio = " + p.devicePixelRatio);
       var offset = calculateOffset(curElement, event);
       p.mouseX = (event.pageX - offset.X) * p.devicePixelRatio; // HACK
       p.mouseY = (event.pageY - offset.Y) * p.devicePixelRatio;

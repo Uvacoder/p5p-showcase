@@ -21,6 +21,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // parameterize
 float minlength;
 
@@ -41,11 +44,13 @@ void setup() {
 	size(DeviceSettings.view_width,DeviceSettings.view_height);
 	frameRate(6);
 	smooth();
-
 	
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -156,7 +161,7 @@ void reset() {
 	background(bg);
 	noFill();
 	stroke(c);
-	strokeWeight(1);
+	strokeWeight(dpr*0.75);
 	
 	
 	// static

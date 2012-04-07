@@ -30,6 +30,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // parameterize
 int psize;
 int msize;
@@ -57,7 +60,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
-	
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -251,7 +256,7 @@ void draw() {
 				// pixel
 				int sx = (int)(px*psize+vx)+offset;
 				int sy = (int)(py*psize+vy);
-                rect(sx,sy,1,1);
+                rect(sx,sy,dpr*0.75,dpr*0.75);
 				
 				// increment y
 				oy = (oy+1) % 2;

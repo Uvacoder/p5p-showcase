@@ -19,6 +19,9 @@ var defaults =  {
 Motion motion;
 Colors colors;
 
+// retina
+float dpr;
+
 // parameterize
 int nbSegments;
 int nbLines;
@@ -47,6 +50,9 @@ void setup() {
 	// lib
 	motion = new Motion();
 	colors = new Colors();
+    
+    // retina scale
+    dpr = deviceRetina() ? 2 : 1;
 	
 	// settings & reset
 	settings();
@@ -138,7 +144,7 @@ void reset() {
 	
 	// sketch
 	noFill();
-	strokeWeight(random(0.5,1.5));
+	strokeWeight(random(0.5,1.5)*dpr);
 	
 }
 
