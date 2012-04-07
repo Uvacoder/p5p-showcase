@@ -1235,6 +1235,7 @@
       sketch: undef
     };
     p.name = "Processing.js Instance";
+	p.devicePixelRatio = 1; // 1 = default, 2 = retina // HACK
     p.use3DContext = false;
     p.focused = false;
     p.breakShape = false;
@@ -8051,10 +8052,11 @@
         "Y": offsetY
       }
     }
-    function updateMousePosition(curElement, event) {
+    function updateMousePosition(curElement, event) { 
+	  //console.log("p.devicePixelRatio = " + p.devicePixelRatio);
       var offset = calculateOffset(curElement, event);
-      p.mouseX = event.pageX - offset.X;
-      p.mouseY = event.pageY - offset.Y
+      p.mouseX = (event.pageX - offset.X) * p.devicePixelRatio; // HACK
+      p.mouseY = (event.pageY - offset.Y) * p.devicePixelRatio;
     }
     function addTouchEventOffset(t) {
       var offset = calculateOffset(t.changedTouches[0].target, t.changedTouches[0]),

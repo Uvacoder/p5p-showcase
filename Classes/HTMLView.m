@@ -424,14 +424,21 @@
 	
 	// device
 	UIDevice *device = [UIDevice currentDevice];
+    
+    // width
+    float view_width = self.webView.frame.size.width * ([Utils isRetina] ? 2.0 : 1.0);
+    float view_height = self.webView.frame.size.height * ([Utils isRetina] ? 2.0 : 1.0);
+    
+    // properties
     NSMutableDictionary *devProps = [NSMutableDictionary dictionaryWithCapacity:8];
 	[devProps setObject:type forKey:@"type"];
     [devProps setObject:[device model] forKey:@"platform"];
     [devProps setObject:[device systemVersion] forKey:@"version"];
 	[devProps setObject:[device name] forKey:@"name"];
     [devProps setObject:[device uniqueIdentifier] forKey:@"uuid"];
-	[devProps setObject:[NSString stringWithFormat:@"%f",self.webView.frame.size.width] forKey:@"view_width"];
-	[devProps setObject:[NSString stringWithFormat:@"%f",self.webView.frame.size.height] forKey:@"view_height"];
+    [devProps setObject:[NSString stringWithFormat:@"%@",[Utils isRetina] ? @"yup" : @"nop"] forKey:@"retina"];
+	[devProps setObject:[NSString stringWithFormat:@"%f",view_width] forKey:@"view_width"];
+	[devProps setObject:[NSString stringWithFormat:@"%f",view_height] forKey:@"view_height"];
 	
 	// return dict
     NSDictionary *devReturn = [NSDictionary dictionaryWithDictionary:devProps];

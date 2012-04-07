@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>www/sketches/sketch.html</string>
+	<string>www/skin/js/jquery/jquery.ios.js</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -34,50 +34,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>www/sketches/_plib/p5p.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>16</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>www/sketches/line/_plib/line.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>28</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>26</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>29</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
 		</dict>
 		<key>www/sketches/line/agentc/agentc.pde</key>
 		<dict>
@@ -177,20 +133,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>www/sketches/line/lineforline/lineforline.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>www/sketches/line/quellebruit/quellebruit.pde</key>
 		<dict>
 			<key>caret</key>
@@ -247,20 +189,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>www/sketches/sketch.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>www/skin/css/media/mobile.css</key>
 		<dict>
 			<key>caret</key>
@@ -274,6 +202,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>55</integer>
+		</dict>
+		<key>www/skin/js/jquery/jquery.ios.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>14</integer>
+				<key>line</key>
+				<integer>12</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>www/skin/js/jquery/jquery.plugins.js</key>
 		<dict>
@@ -310,14 +252,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>line</key>
-				<integer>9993</integer>
+				<integer>8055</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>8030</integer>
 		</dict>
 		<key>www/skin/p5p.css</key>
 		<dict>
@@ -338,40 +280,21 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>31</integer>
 				<key>line</key>
-				<integer>183</integer>
+				<integer>205</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>150</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>31</integer>
-				<key>line</key>
-				<integer>183</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>18</integer>
-				<key>line</key>
-				<integer>183</integer>
-			</dict>
+			<integer>181</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>www/skin/p5p.js</string>
-		<string>www/sketches/line/_plib/line.pde</string>
-		<string>www/sketches/line/lineforline/lineforline.pde</string>
 		<string>www/skin/js/processing/processing.js</string>
-		<string>www/sketches/sketch.html</string>
-		<string>www/sketches/_plib/p5p.pde</string>
+		<string>www/skin/js/jquery/jquery.ios.js</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

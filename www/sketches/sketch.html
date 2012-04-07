@@ -43,6 +43,7 @@
         }
         
         
+        
         /* -------------------------------------------------------------------------------------
          PROCESSING
          ===================================================================================== */
@@ -63,6 +64,22 @@
             -webkit-user-select: none;
             background-color:#FFFCF0;
         }
+        
+        
+        /* -------------------------------------------------------------------------------------
+         RETINA
+         ===================================================================================== */
+        
+        /* retina */
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) { 
+            
+            /* scale down */
+            .processing {
+                zoom:0.5;
+            } 
+            
+        }
+        
     </style>
     <!-- javascript -->
 	<script type="text/javascript" charset="utf-8" src="../skin/js/jquery/jquery.js"></script>

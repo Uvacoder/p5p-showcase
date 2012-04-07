@@ -207,9 +207,14 @@ var P5P = {
 					
 						// init
 						P5P.p5 = new Processing(canvas,code);
-                        //P5P.p5.use3DContext = true;
+						
+						// retina
+						if (DeviceSettings.retina && DeviceSettings.retina == "yup") {
+							P5P.p5.devicePixelRatio = 2;
+						}
+						
+						// done
 						P5P.ios.log("initialized.");
-
 						
 					}});
 			

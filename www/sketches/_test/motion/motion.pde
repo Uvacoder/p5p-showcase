@@ -11,6 +11,7 @@ var defaults =  {
 float speed;
 PVector mover;
 PVector dot;
+PVector tp;
 Motion motion;
 
 /*
@@ -36,6 +37,7 @@ P5P.ios.log("setup");
 	speed = 0.05;
 	dot = new PVector(width/2.0,height/2.0);
 	mover = new PVector(width/2.0,height/2.0);
+    tp = new PVector(width/2.0,height/2.0);
 	
 	// motion
 	motion = new Motion();
@@ -114,10 +116,36 @@ void draw() {
 	dot.y += (mover.y-dot.y) * speed;
 	fill(0,255,0);
 	ellipse(dot.x,dot.y,10,10);
+    
+    // touch point
+	fill(0,0,255);
+	ellipse(tp.x,tp.y,20,20);
 	
   
 }
 
+
+/*
+ * Processing event mouse pressed.
+ */
+void mousePressed() {
+    
+    // don't touch this
+    tp.x = mouseX;
+    tp.y = mouseY;
+
+}
+
+/*
+ * Processing event mouse moved.
+ */
+void mouseDragged() {
+    
+    // what a drag
+    tp.x = mouseX;
+    tp.y = mouseY;
+
+}
 
 
 

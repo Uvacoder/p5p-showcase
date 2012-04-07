@@ -586,8 +586,8 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	
 	// test
     #ifdef DEBUG
-    //NSURL *xmlTest = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]];
-    //[p5pParser parseXMLFileAtURL:xmlTest parseError:&parseError];
+    NSURL *xmlTest = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"xml"]];
+    [p5pParser parseXMLFileAtURL:xmlTest parseError:&parseError];
     #endif
 	
     // line

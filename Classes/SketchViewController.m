@@ -38,7 +38,6 @@
 */
 @interface SketchViewController (Helpers)
 - (void)exportSave:(id)sender;
-- (void)exportWallpaper:(id)sender;
 - (void)exportPrint:(id)sender;
 - (void)exportEmail:(id)sender;
 - (void)exportTwitter:(id)sender;
@@ -594,9 +593,6 @@ static BOOL toolbarHidden = NO;
 	// export options
 	NSMutableArray *exportOptions = [[NSMutableArray alloc] init];
 	[exportOptions addObject:NSLocalizedString(@"Save as Image",@"Save as Image")];
-    if ([Utils isRetina]) {
-        [exportOptions addObject:NSLocalizedString(@"Save as Wallpaper",@"Save as Wallpaper")];
-    }
 	[exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
 	[exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
 	
@@ -661,24 +657,7 @@ static BOOL toolbarHidden = NO;
 	[note showNote];
 	
 	// screenshot
-	UIImage *screenshot = [htmlView screenshot:NO];
-	
-	// save image
-	UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
-- (void)exportWallpaper:(id)sender {
-	DLog();
-	
-	// track
-	[Tracker trackEvent:TEventExport action:@"Wallpaper" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
-	
-	
-	// note
-	[note noteActivity:@"Capture Screenshot..."];
-	[note showNote];
-	
-	// screenshot
-	UIImage *screenshot = [htmlView screenshot:YES];
+	UIImage *screenshot = [htmlView screenshot:[Utils isRetina]];
 	
 	// save image
 	UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
@@ -1061,28 +1040,18 @@ static BOOL toolbarHidden = NO;
 	
 	// sender
 	UIBarButtonItem *exportButton = [toolbar.items objectAtIndex:7];
-	
-    
-    // index
-    int indx = buttonIndex;
-    if (indx >= 1 && ! [Utils isRetina]) {
-        indx++;
-    }
+
 	
 	// save
-    if (indx == 0) {
+    if (buttonIndex == 0) {
 		[self exportSave:exportButton];
     }
-    // wallpaper
-    else if (indx == 1) {
-		[self exportWallpaper:exportButton];
-    }
 	// email
-	else if (indx == 2) {
+	else if (buttonIndex == 1) {
 		[self exportEmail:exportButton];
     }
 	// twitter
-	else if (indx == 3) {
+	else if (buttonIndex == 2) {
 		[self exportTwitter:exportButton];
     }
 	

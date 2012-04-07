@@ -10,6 +10,7 @@ if (typeof(DeviceSettings) != 'object') {
 			version:null,
 			name:null,
 			uuid:null,
+			retina:null,
 			view_width:0,
 			view_height:0	
 	};
