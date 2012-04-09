@@ -594,7 +594,9 @@ static BOOL toolbarHidden = NO;
 	NSMutableArray *exportOptions = [[NSMutableArray alloc] init];
 	[exportOptions addObject:NSLocalizedString(@"Save as Image",@"Save as Image")];
 	[exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
-	[exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
+    if (! iOS4) {
+        [exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
+    }
 	
 	
 	// action sheet

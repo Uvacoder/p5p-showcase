@@ -294,7 +294,7 @@
 		[composer setSubject:[NSString stringWithFormat:@"P5P iPad/iPhone App"]];
 	 
 		// message
-		NSString *message = NSLocalizedString(@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches.\nhttp://p5p.cecinestpasparis.net",@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches.\nhttp://p5p.cecinestpasparis.net");
+        NSString *message = [NSString stringWithFormat:@"%@\n%@",NSLocalizedString(@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches.",@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches."),vAppStoreURL];
 		[composer setMessageBody:message isHTML:NO];
 		
 		// promo image
@@ -356,6 +356,13 @@
         
         // modal
         [self presentModalViewController:tweetViewController animated:YES];
+    }
+    else {
+        
+        // note
+		[note noteError:@"Twitter not supported." ];
+		[note showNote];
+		[note dismissNoteAfterDelay:2.4];
     }
 	
 }
@@ -450,7 +457,7 @@
 			}
 			// visit app store
 			else {
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id443413228"]];
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:vAppStoreLink]];
 			}
 			break;
 		}

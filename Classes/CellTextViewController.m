@@ -73,7 +73,7 @@
 		[tf setReturnKeyType:UIReturnKeyDone];
 		[tf setClearButtonMode:UITextFieldViewModeWhileEditing];
 		[tf setOpaque:YES];
-		[tf setBackgroundColor:[UIColor clearColor]];
+		[tf setBackgroundColor:[UIColor whiteColor]];
 		
 		// add to view
 		self.textField = tf;

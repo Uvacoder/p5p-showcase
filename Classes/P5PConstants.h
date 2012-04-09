@@ -33,4 +33,12 @@
 #define udNoteSketch                            @"note_sketch"	
 
 // Values
-#define vAppEmail								@"p5p@cecinestpasparis.net"		
+#define vAppEmail                               @"p5p@cecinestpasparis.net"	
+#define vAppWebsite                             @"http://p5p.cecinestpasparis.net"	
+#define vAppStoreURL                            @"http://itunes.apple.com/app/p5p-generative-sketches/id443413228?mt=8"
+#define vAppStoreLink                           @"itms-apps://itunes.apple.com/app/id443413228"
+
+// Flags
+#define iPad                                        (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+#define iPhone                                      (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+#define iOS4    ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending)
