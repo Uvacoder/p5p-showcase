@@ -62,8 +62,22 @@
     // init
 	if ((self = [super init])) {
         
+        
+        // iphone 4in
+        BOOL iphone_4in = NO;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            CGRect screen = [[UIScreen mainScreen] bounds];
+            if ((screen.size.height / screen.size.width) > 1.5) {
+                iphone_4in = YES;
+            }
+        }
+        
 		// view
-		self.view = [[UIView alloc] initWithFrame:frame];
+        UIView *v = [[UIView alloc] initWithFrame:frame];
+		self.view = v;
+        [v release];
+        
+        // popover
 		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
 		self.view.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:227.0/255.0 alpha:1.0];
 		
@@ -74,10 +88,10 @@
         
         // values
         float inset = 20;
-        
+        float offset = iphone_4in ? 45 : 15;
         
         // selection view
-        UIView *sv = [[UIView alloc] initWithFrame:CGRectMake(inset, 15, (frame.size.width/2.0)-inset, 60)];
+        UIView *sv = [[UIView alloc] initWithFrame:CGRectMake(inset, offset, (frame.size.width/2.0)-inset, 60)];
         sv.backgroundColor = [UIColor whiteColor];
         sv.layer.borderColor = [UIColor whiteColor].CGColor;
         sv.layer.cornerRadius = 3.0;
@@ -89,7 +103,7 @@
         
         
         // selection label rgb
-        UILabel *lblSelectionRGB = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width/2.0)+inset, 15, 50, 60)];
+        UILabel *lblSelectionRGB = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width/2.0)+inset, offset, 50, 60)];
         lblSelectionRGB.backgroundColor = [UIColor clearColor];
         lblSelectionRGB.font = [UIFont fontWithName:@"Helvetica" size:15.0];
         lblSelectionRGB.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
@@ -104,7 +118,7 @@
         [lblSelectionRGB release];
         
         // selection label hsv
-        UILabel *lblSelectionHSV = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width/2.0)+inset+45+inset, 15, 50, 60)];
+        UILabel *lblSelectionHSV = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width/2.0)+inset+45+inset, offset, 50, 60)];
         lblSelectionHSV.backgroundColor = [UIColor clearColor];
         lblSelectionHSV.font = [UIFont fontWithName:@"Helvetica" size:15.0];
         lblSelectionHSV.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
@@ -120,7 +134,7 @@
         
         
         // color picker
-        CMColorPicker *cp = [[CMColorPicker alloc] initAtOrigin:CGPointMake(5, 75)];
+        CMColorPicker *cp = [[CMColorPicker alloc] initAtOrigin:CGPointMake(5, iphone_4in ? 105 : 75)];
         [cp addTarget:self action:@selector(actionColor:) forControlEvents:UIControlEventValueChanged];	
         
         colorPicker = [cp retain];
@@ -139,12 +153,12 @@
         else {
             
             // Japanese Palette
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Shikan-cha" color:[UIColor colorWithRed:181.0/255.0 green:163.0/255.0 blue:131.0/255.0 alpha:1.0]]];
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Kimidori" color:[UIColor colorWithRed:187.0/255.0 green:192.0/255.0 blue:0/255.0 alpha:1.0]]];
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Uguisu-cha" color:[UIColor colorWithRed:123.0/255.0 green:137.0/255.0 blue:66.0/255.0 alpha:1.0]]];
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Sabiasagi" color:[UIColor colorWithRed:105.0/255.0 green:153.0/255.0 blue:174.0/255.0 alpha:1.0]]];
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Botan-iro" color:[UIColor colorWithRed:225.0/255.0 green:0.0/255.0 blue:178.0/255.0 alpha:1.0]]];
-            [swatches addObject:[[ColorSwatch alloc] initWithLabel:@"Shinkou" color:[UIColor colorWithRed:229.0/255.0 green:0.0/255.0 blue:30.0/255.0 alpha:1.0]]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Shikan-cha" color:[UIColor colorWithRed:181.0/255.0 green:163.0/255.0 blue:131.0/255.0 alpha:1.0]] autorelease]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Kimidori" color:[UIColor colorWithRed:187.0/255.0 green:192.0/255.0 blue:0/255.0 alpha:1.0]] autorelease]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Uguisu-cha" color:[UIColor colorWithRed:123.0/255.0 green:137.0/255.0 blue:66.0/255.0 alpha:1.0]] autorelease]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Sabiasagi" color:[UIColor colorWithRed:105.0/255.0 green:153.0/255.0 blue:174.0/255.0 alpha:1.0]] autorelease]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Botan-iro" color:[UIColor colorWithRed:225.0/255.0 green:0.0/255.0 blue:178.0/255.0 alpha:1.0]] autorelease]];
+            [swatches addObject:[[[ColorSwatch alloc] initWithLabel:@"Shinkou" color:[UIColor colorWithRed:229.0/255.0 green:0.0/255.0 blue:30.0/255.0 alpha:1.0]] autorelease]];
 
         }
         
@@ -153,7 +167,7 @@
         float sb = 10;
         float sw = (frame.size.width-2*inset-2*sb) / 3.0;
         float sh = 30;
-        float sy = 310;
+        float sy = iphone_4in ? 340 : 310;
         float sx = 0;
         for (int i = 0; i < [swatches count]; i++) {
             
@@ -259,6 +273,12 @@
                                  btnSet,
                                  spacer,
                                  nil];
+            
+            // release
+            [btnClear release];
+            [btnSet release];
+            [flex release];
+            [spacer release];
 
         }
 

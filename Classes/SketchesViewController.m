@@ -44,7 +44,7 @@
 @synthesize scrollView;
 @synthesize pageControl;
 @synthesize buttonInfo;
-@synthesize buttonCollections;
+//@synthesize buttonCollections;
 
 
 #pragma mark -
@@ -63,6 +63,13 @@
 		nbOfItemsPerPage = 9;
 		gridCellWidth = 210;
 		gridCellHeight = 325;
+        
+        // display
+        d4in = NO;
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            CGRect screen = [[UIScreen mainScreen] bounds];
+            d4in = (screen.size.height / screen.size.width) > 1.5;
+        }
 		
 		// return
 		return self;
@@ -94,6 +101,7 @@
 	background.contentMode = UIViewContentModeRedraw;
     background.image = [UIImage imageNamed: @"bg_sketches.png"];
 	[self.view addSubview: background];
+    [background release];
 	
 	// page control
 	ColorPageControl *pControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, sheight-50, swidth, 50)];
@@ -103,6 +111,7 @@
 	pControl.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	self.pageControl = pControl;
 	[self.view addSubview:pageControl];
+    [pControl release];
 	
 	
 	// scroll view
@@ -128,16 +137,16 @@
 	[btnInfo addTarget:self action:@selector(actionInfo:) forControlEvents:UIControlEventTouchUpInside];
 	self.buttonInfo = btnInfo;
 	[self.view addSubview:buttonInfo];
-	[btnInfo release];
 	
 	// button collections
+    /*
 	UIButton *btnCollections = [UIButton buttonWithType:UIButtonTypeCustom]; 
 	btnCollections.frame = CGRectMake(0, sheight-buttonSize, buttonSize, buttonSize);
 	[btnCollections setImage:[UIImage imageNamed:@"btn_collections.png"] forState:UIControlStateNormal];
 	[btnCollections addTarget:self action:@selector(actionCollections:) forControlEvents:UIControlEventTouchUpInside];
 	self.buttonCollections = btnCollections;
 	[self.view addSubview:buttonCollections];
-	[btnCollections release];
+     */
 	
 	
 	// reload
@@ -204,7 +213,8 @@
 		
 		// init
 		float gx = p * swidth;
-		AQGridView *gridView = [[[AQGridView alloc] initWithFrame:CGRectMake(gx, 25, swidth, sheight-50)] autorelease];
+        float gy = d4in ? 50 : 25;
+		AQGridView *gridView = [[[AQGridView alloc] initWithFrame:CGRectMake(gx, gy, swidth, sheight-2*gy)] autorelease];
 		gridView.dataSource = self;
 		gridView.delegate = self;
 		gridView.pageIndex = p;
@@ -471,7 +481,7 @@
 	[scrollView release];
 	[pageControl release];
 	[buttonInfo release];
-	[buttonCollections release];
+	//[buttonCollections release];
 	
 	// fields
 	[sketches release];

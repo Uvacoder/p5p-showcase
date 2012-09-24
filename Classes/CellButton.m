@@ -81,7 +81,6 @@
 	// accessory
 	self.buttonAccessory = buttonObj;
 	self.accessoryView = buttonAccessory;
-	[buttonObj release];
 
     // return
     return self;

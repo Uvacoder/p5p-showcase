@@ -43,15 +43,21 @@
 	// init super
 	if (self = [super init]) {
 		FLog();
-	
-		// init sketches
-		self.sketchesViewController = [[SketchesViewController_iPhone alloc] init];
+        
+        // init sketches
+        SketchesViewController_iPhone *sktsvc = [[SketchesViewController_iPhone alloc] init];
+		self.sketchesViewController = sktsvc;
+        [sktsvc release];
 		
 		// init sketch
-		self.sketchViewController = [[SketchViewController_iPhone alloc] init];
+        SketchViewController_iPhone *skvc = [[SketchViewController_iPhone alloc] init];
+		self.sketchViewController = skvc;
+        [skvc release];
 		
 		// init collection
-		self.collectionsViewController = [[CollectionsViewController_iPhone alloc] init];
+        CollectionsViewController_iPhone *cvc = [[CollectionsViewController_iPhone alloc] init];
+		self.collectionsViewController = cvc;
+        [cvc release];
 		
 		// return of the jedi
 		return self;

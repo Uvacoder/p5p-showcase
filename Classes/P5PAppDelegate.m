@@ -125,7 +125,6 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	if (!context) {
 		// Handle the error.
 	}
-
     
 	// yes sir
     return YES;
@@ -187,7 +186,7 @@ NSString *STORE_DEFAULT = @"P5P_default";
     
     
     // notification sketch
-    [self storeNotification:NSLocalizedString(@"↑Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.", @"⇑ Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.") type:udNoteSketch];
+    [self storeNotification:NSLocalizedString(@"Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.", @"Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.") type:udNoteSketch];
 	
 	// load data
 	[self loadData];
@@ -270,7 +269,7 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	}
 	
 	// data
-	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:mutableFetchResults];
+	NSMutableArray *data = [[[NSMutableArray alloc] initWithArray:mutableFetchResults] autorelease];
 	
 	// release
 	[mutableFetchResults release];

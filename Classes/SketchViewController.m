@@ -59,7 +59,7 @@
 #pragma mark Constants
 
 // constants
-#define kToolbarOpacity	0.96f
+#define kToolbarOpacity	0.9f
 #define kToolbarTimeShow 0.21f
 #define kToolbarTimeHide 0.45f
 #define kToolbarAutohideTime 20.0f
@@ -176,7 +176,7 @@
 	// button back
 	UIBarButtonItem *btnBack = [[UIBarButtonItem alloc]
 								initWithImage:[UIImage imageNamed:@"btn_back.png"]  
-								style:UIBarButtonItemStyleBordered
+								style:UIBarButtonItemStylePlain
 								target:self
 								action:@selector(actionBack:)];
 								
@@ -275,6 +275,7 @@
 	
 	// good to go
 	self.view = view;
+    [view release];
 }
 
 
@@ -325,8 +326,8 @@
     // mode refresh
     modeRefreshTap = [(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefaultBool:udPreferenceRefreshTapEnabled];
 
-	
 }
+
 
 /*
 * Resets the view.
@@ -891,6 +892,7 @@ static BOOL toolbarHidden = NO;
         
         // modal
         [self presentModalViewController:tweetViewController animated:YES];
+        [tweetViewController release];
     }
     
 	

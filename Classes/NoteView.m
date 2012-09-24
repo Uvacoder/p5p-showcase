@@ -70,7 +70,7 @@
 - (id)initWithFrame:(CGRect)frame {
 
 	// size
-	float nvs = 128;
+	float nvs = 160;
 	float inset = 10.0;
 		
 	// init UIView
@@ -98,10 +98,10 @@
 
 		
 		// message
-		msgNote = [[UILabel alloc] initWithFrame:CGRectMake(inset, nframe.size.height/2.0+nvs/16, nvs-2*inset, nvs/4)];
+		msgNote = [[UILabel alloc] initWithFrame:CGRectMake(inset, nframe.size.height/2.0, nvs-2*inset, nvs/4)];
 		msgNote.backgroundColor = [UIColor clearColor];
 		
-		msgNote.font = [UIFont fontWithName:@"Helvetica" size:12.0];
+		msgNote.font = [UIFont fontWithName:@"Helvetica" size:15.0];
 		msgNote.textAlignment = UITextAlignmentCenter;
 		msgNote.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
 		msgNote.numberOfLines = 2;
@@ -124,7 +124,7 @@
         
 		
 		// icon center
-		CGPoint iconNoteCenter = CGPointMake(nframe.size.width/2.0, nframe.size.height/2.0-nvs/8);
+		CGPoint iconNoteCenter = CGPointMake(nframe.size.width/2.0, nframe.size.height/2.0-nvs/8-10);
         CGPoint iconNotificationCenter = CGPointMake(nnframe.size.width/2.0, nnframe.size.height/2.0-nvs/4);
 		CGRect iconNoteFrame = CGRectMake(iconNoteCenter.x-16, iconNoteCenter.y-16, 32, 32);
         CGRect iconNotificationFrame = CGRectMake(iconNotificationCenter.x-16, iconNotificationCenter.y-16, 32, 32);

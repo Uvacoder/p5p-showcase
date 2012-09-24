@@ -52,13 +52,19 @@
 	if ((self = [super init])) {
 	
 		// view
-		self.view = [[UIView alloc] initWithFrame:frame];
+        UIView *v = [[UIView alloc] initWithFrame:frame];
+		self.view = v;
+        [v release];
+        
+        // popover
 		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
         
         // remove background
         self.view.backgroundColor = [UIColor clearColor];
         self.view.opaque = YES;
 		
+        // device
+        BOOL iphone_4in = NO;
         
         // ipad
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -69,6 +75,12 @@
 		// iphone
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
             
+            
+            // screen
+            CGRect screen = [[UIScreen mainScreen] bounds];
+            if ((screen.size.height / screen.size.width) > 1.5) {
+                iphone_4in = YES;
+            }
             
             // button back
             UIBarButtonItem *btnBack = [[UIBarButtonItem alloc] 
@@ -98,6 +110,11 @@
                                  btnBack,
                                  flex,
                                  nil];
+            
+            // release
+            [btnBack release];
+            [flex release];
+            [spacer release];
 		}
 	
 
@@ -122,9 +139,11 @@
 		self.picker = p;
 		[self.view addSubview:picker];
 		[p release];
+        
 		
 		// text field
-		textField = [[UITextField alloc] initWithFrame:CGRectMake(10,20,self.view.frame.size.width-20,40)];
+        float py = iphone_4in ? 50 : 20;
+		textField = [[UITextField alloc] initWithFrame:CGRectMake(10,py,self.view.frame.size.width-20,40)];
 		textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		textField.backgroundColor = [UIColor whiteColor];

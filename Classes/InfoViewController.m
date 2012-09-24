@@ -116,6 +116,7 @@
 
 	// table header
 	self.tableView.tableHeaderView = aboutView;
+    [aboutView release];
 	
 	
 	// note view
@@ -356,6 +357,7 @@
         
         // modal
         [self presentModalViewController:tweetViewController animated:YES];
+        [tweetViewController release];
     }
     else {
         

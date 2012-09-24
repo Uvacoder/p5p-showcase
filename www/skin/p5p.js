@@ -204,7 +204,7 @@ var P5P = {
 					
 						// show sketch
 						jQuery("#sketch").show();
-					
+                                
 						// init
 						P5P.p5 = new Processing(canvas,code);
 						

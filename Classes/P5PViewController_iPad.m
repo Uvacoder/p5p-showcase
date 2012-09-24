@@ -45,13 +45,19 @@
 		FLog();
 	
 		// init sketches
-		self.sketchesViewController = [[SketchesViewController_iPad alloc] init];
+        SketchesViewController_iPad *sktsvc = [[SketchesViewController_iPad alloc] init];
+		self.sketchesViewController = sktsvc;
+        [sktsvc release];
 		
 		// init sketch
-		self.sketchViewController = [[SketchViewController_iPad alloc] init];
+        SketchViewController_iPad *skvc = [[SketchViewController_iPad alloc] init];
+		self.sketchViewController = skvc;
+        [skvc release];
 		
 		// init collection
-		self.collectionsViewController = [[CollectionsViewController_iPad alloc] init];
+        CollectionsViewController_iPad *cvc = [[CollectionsViewController_iPad alloc] init];
+		self.collectionsViewController = cvc;
+        [cvc release];
 		
 		// return of the jedi
 		return self;

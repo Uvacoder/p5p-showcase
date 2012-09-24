@@ -107,6 +107,7 @@
 	pControl.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	self.pageControl = pControl;
 	[self.view addSubview:pageControl];
+    [pControl release];
 	
 	// scroll view
 	UIScrollView *sView = [[UIScrollView alloc] initWithFrame:self.view.frame];

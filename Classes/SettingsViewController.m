@@ -83,16 +83,23 @@
         UIView *pattern = [[UIView alloc] initWithFrame:self.view.frame];
         pattern.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
         self.tableView.backgroundView = pattern;
+        [pattern release];
         
         // buttons
 		self.navigationItem.leftBarButtonItem = btnReset;
-		[btnReset release];	
 		self.navigationItem.rightBarButtonItem = btnApply;
-		[btnApply release];	
 
 	}
 	// iPhone
 	else {
+        
+        // screen
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        if ((screen.size.height / screen.size.width) > 1.5) {
+            self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0);
+        }
+        
+        
 		// flex
 		UIBarButtonItem *flex = [[UIBarButtonItem alloc] 
 								initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace 
@@ -115,8 +122,16 @@
 							btnApply,
 							spacer,
 							nil];
+        
+        // release
+        [flex release];
+        [spacer release];
 							
 	}
+    
+    // release
+    [btnReset release];
+    [btnApply release];	
 
 }
 
@@ -198,7 +213,7 @@
 	
 		// settings
 		GroupData *gdata = [[[GroupData alloc] init] autorelease];
-		gdata.section = [group.name copy];
+		gdata.section = group.name;
 		
 		NSMutableArray *groupsettings = [NSMutableArray arrayWithArray:[[group settings] allObjects]];
 		gdata.data = [[[NSMutableArray alloc] init] autorelease];
@@ -207,14 +222,14 @@
 		for (Setting *s in groupsettings) {
 			
 			// setting
-			SettingData *sd = [[[SettingData alloc] init] autorelease];
-			sd.label = [s.label copy];
-			sd.value = [s.value copy];
-			sd.key = [s.key copy];
-			sd.sort = [s.sort copy];
-			sd.type = [s.type copy];
-			sd.live = [s.live copy];
-			sd.options = [s.options copy];
+			SettingData *sd = [[SettingData alloc] init];
+			sd.label = s.label;
+			sd.value = s.value;
+			sd.key = s.key;
+			sd.sort = s.sort;
+			sd.type = s.type;
+			sd.live = s.live;
+			sd.options = s.options;
 		
 			// merge with defaults
 			if ([defaults objectForKey:sd.key]) {
@@ -223,6 +238,7 @@
 			
 			// add
 			[gdata.data addObject:sd];
+            [sd release];
 
 		}
 		[gdata.data sortUsingDescriptors:sortSorters];
@@ -632,11 +648,11 @@
             NSMutableArray *colorSwatches = [[NSMutableArray alloc] init];
             for (NSDictionary *swatch in swatches)	{
                 FLog(@"swatch = %@",[swatch objectForKey:@"label"]);
-                [colorSwatches addObject:[[ColorSwatch alloc] initWithLabel:[swatch objectForKey:@"label"] 
+                [colorSwatches addObject:[[[ColorSwatch alloc] initWithLabel:[swatch objectForKey:@"label"]
                                                                  color:[UIColor colorWithRed:[[nf numberFromString:(NSString*)[swatch objectForKey:@"r"]] floatValue]
                                                                                        green:[[nf numberFromString:(NSString*)[swatch objectForKey:@"g"]] floatValue]
                                                                                         blue:[[nf numberFromString:(NSString*)[swatch objectForKey:@"b"]] floatValue]
-                                                                                    alpha:1.0]]];
+                                                                                    alpha:1.0]] autorelease]];
             }
             
             // set

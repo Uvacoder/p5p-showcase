@@ -41,7 +41,7 @@
 	UIScrollView *scrollView;
 	ColorPageControl *pageControl;
 	UIButton *buttonInfo;
-	UIButton *buttonCollections;
+	//UIButton *buttonCollections;
 
 	// data
 	NSMutableArray *sketches;
@@ -57,6 +57,7 @@
 	BOOL pageControlIsChangingPage;
 	int nbOfItems;
 	int nbOfPages;
+    BOOL d4in;
 
 }
 // Properties
@@ -65,7 +66,7 @@
 @property (nonatomic, retain) UIView *scrollView;
 @property (nonatomic, retain) ColorPageControl *pageControl;
 @property (nonatomic, retain) UIButton *buttonInfo;
-@property (nonatomic, retain) UIButton *buttonCollections;
+//@property (nonatomic, retain) UIButton *buttonCollections;
 
 // Business Methods
 - (void)reloadSketches;

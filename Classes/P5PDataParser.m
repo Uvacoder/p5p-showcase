@@ -113,12 +113,14 @@
 		// handle the error
 		NSLog(@"P5P CoreData Error\n%@\n%@", error, [error userInfo]);
 	}
+    [request release];
 
 	// delete all collections
 	for (int i = 0; i < [mutableFetchResults count]; i++) {
 		[managedObjectContext deleteObject:[mutableFetchResults objectAtIndex:i]];
 		
 	}
+    [mutableFetchResults release];
 
 	
 	// Update the data model effectivly removing the objects we removed above.

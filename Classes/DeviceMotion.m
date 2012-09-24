@@ -111,7 +111,7 @@ static const double kUserAccelerationLpfCutoffFrequency = 10.0;
 	GLog(@"user acceleration: x = %f,  y = %f, z = %f",userAcceleration.x,userAcceleration.y,userAcceleration.z);
 	
 	// return
-	DeviceAcceleration *da = [[DeviceAcceleration alloc] init];
+	DeviceAcceleration *da = [[[DeviceAcceleration alloc] init] autorelease];
 	da.x = userAcceleration.x;
 	da.y = userAcceleration.y;
 	da.z = userAcceleration.z;

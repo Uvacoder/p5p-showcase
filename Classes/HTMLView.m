@@ -28,7 +28,7 @@
 * Helper Stack.
 */
 @interface HTMLView (Helpers)
-- (NSMutableString*)cleanupJSON:(NSMutableString*)s;
+- (NSString*)cleanupJSON:(NSMutableString*)s;
 @end
 
 
@@ -132,7 +132,7 @@
 	}
 	
 	// cleanup
-	result = [self cleanupJSON:result];
+	[result setString:[self cleanupJSON:result]];
 
 	
 	// refresh device
@@ -166,7 +166,7 @@
 	}
 	
 	// cleanup
-	result = [self cleanupJSON:result];
+	[result setString:[self cleanupJSON:result]];
 	
 	// update device
     DLog(@"Device update: %@", result);
@@ -193,7 +193,7 @@
 	[result appendString:@"\nwindow.UserDefaults = {};"];
 	
 	// cleanup
-	result = [self cleanupJSON:result];
+	[result setString:[self cleanupJSON:result]];
 	
 	// init device
     DLog(@"Device unload: %@", result);
@@ -232,9 +232,8 @@
 		[result appendFormat:@"\nwindow.UserDefaults = %@;", [[self userDefaults] JSONRepresentation]];
 	}
 	
-	
 	// cleanup
-	result = [self cleanupJSON:result];
+	[result setString:[self cleanupJSON:result]];
 	
 	// reload device
     DLog(@"Device reload: %@", result);
@@ -317,7 +316,7 @@
 	}
 	
 	// cleanup
-	result = [self cleanupJSON:result];
+	[result setString:[self cleanupJSON:result]];
 	
 	// init device
     DLog(@"Device initialization: %@", result);
@@ -383,7 +382,7 @@
 /*
 * Cleans up a JSON string 
 */
-- (NSMutableString*)cleanupJSON:(NSMutableString *)s {
+- (NSString*)cleanupJSON:(NSMutableString *)s {
 	GLog();
 	
 	// convert string to object "{'property':'value}"
@@ -435,7 +434,6 @@
     [devProps setObject:[device model] forKey:@"platform"];
     [devProps setObject:[device systemVersion] forKey:@"version"];
 	[devProps setObject:[device name] forKey:@"name"];
-    [devProps setObject:[device uniqueIdentifier] forKey:@"uuid"];
     [devProps setObject:[NSString stringWithFormat:@"%@",[Utils isRetina] ? @"yup" : @"nop"] forKey:@"retina"];
 	[devProps setObject:[NSString stringWithFormat:@"%f",view_width] forKey:@"view_width"];
 	[devProps setObject:[NSString stringWithFormat:@"%f",view_height] forKey:@"view_height"];

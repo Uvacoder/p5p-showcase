@@ -54,6 +54,7 @@
 	
 	// configure and display the window
     [window addSubview:[rootViewController view]];
+    [window setRootViewController:rootViewController];
     [window makeKeyAndVisible];
 	
 	// yes my dear

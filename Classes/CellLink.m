@@ -46,14 +46,13 @@
 	GLog();
 	
 	// init cell
-    self = [super initWithStyle:style reuseIdentifier:identifier];
-    if (self == nil) { 
-        return nil;
+    if ((self = [super initWithStyle:style reuseIdentifier:identifier])) {
+        
+        // accessory
+        UIImageView *aimg = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"icon_link_external.png"]];
+        self.accessoryView = aimg;
+        [aimg release];
     }
-	
-	// accessory
-	self.accessoryView = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"icon_link_external.png"]];
-
 
     // yo mamma
     return self;

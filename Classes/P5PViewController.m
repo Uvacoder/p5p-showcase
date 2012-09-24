@@ -56,8 +56,8 @@
 #pragma mark Constants
 
 // constants
-#define kAnimateTimeNavigateSketch	1.2f
-#define kAnimateTimeNavigateRoot	0.6f
+#define kAnimateTimeNavigateSketch	0.45f
+#define kAnimateTimeNavigateRoot	0.21f
 
 #define kOffsetCollection			115.0f
 #define kAnimateOpacityCollection	0.3f

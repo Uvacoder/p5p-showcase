@@ -39,7 +39,7 @@
 * Init window.
 */
 - (id)initWithViewToObserver:(UIView *)view andDelegate:(id)delegate {
-    if(self == [super init]) {
+    if((self = [super init])) {
         self.viewToObserve = view;
         self.controllerThatObserves = delegate;
     }
@@ -50,7 +50,8 @@
 * Custom send event method.
 */
 - (void)sendEvent:(UIEvent *)event {
-	// super
+	
+    // super
     [super sendEvent:event];
 	
 	// custom 

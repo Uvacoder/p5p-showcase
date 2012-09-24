@@ -87,9 +87,11 @@
 		lblSketchMeta.opaque = YES;
 		lblSketchMeta.text = @"meta";
 		self.sketchMeta = lblSketchMeta;
+        /*
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 			[self.contentView addSubview: sketchMeta];
 		}
+         */
 		[lblSketchMeta release];
 		
 		// sketch title

@@ -487,7 +487,6 @@
 				tvController.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 				tvController.textField.keyboardType = UIKeyboardTypeEmailAddress;
 				[self.navigationController pushViewController:tvController animated:YES];
-				[tvController release];
 			}
 			break;
 		}

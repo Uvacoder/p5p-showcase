@@ -49,7 +49,11 @@
 	if ((self = [super init])) {
 	
 		// view
-		self.view = [[UIView alloc] initWithFrame:frame];
+        UIView *v = [[UIView alloc] initWithFrame:frame];
+		self.view = v;
+        [v release];
+        
+        // popover
 		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
 		
         // remove background

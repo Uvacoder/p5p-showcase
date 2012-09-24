@@ -50,6 +50,7 @@
     sPopoverController.contentViewController.view.alpha = 0.9f;
 	settingsPopoverController = [sPopoverController retain];
 	[sPopoverController release];
+    [sNavigationController release];
 
 }
 

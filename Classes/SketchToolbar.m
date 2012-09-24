@@ -46,7 +46,7 @@
     self.barStyle = UIBarStyleBlackTranslucent;
     
     // background
-    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.72];
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
     
     // back to business
 	return self;

@@ -35,20 +35,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>www/sketches/line/agentc/agentc.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>www/sketches/line/bitbybit/bitbybit.pde</key>
 		<dict>
 			<key>caret</key>
@@ -91,20 +77,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>www/sketches/line/cubism/cubism.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>www/sketches/line/inrecursion/inrecursion.pde</key>
 		<dict>
 			<key>caret</key>
@@ -113,20 +85,6 @@
 				<integer>21</integer>
 				<key>line</key>
 				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>www/sketches/line/laspirale/laspirale.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>10</integer>
-				<key>line</key>
-				<integer>7</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -155,20 +113,6 @@
 				<integer>21</integer>
 				<key>line</key>
 				<integer>11</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>www/sketches/line/strangeattractor/strangeattractor.pde</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -208,14 +152,30 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>12</integer>
+				<integer>107</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>75</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>52</integer>
+				<key>line</key>
+				<integer>107</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>107</integer>
+			</dict>
 		</dict>
 		<key>www/skin/js/jquery/jquery.plugins.js</key>
 		<dict>
@@ -252,14 +212,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>54</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>8054</integer>
+				<integer>8312</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>8031</integer>
+			<integer>8263</integer>
 		</dict>
 		<key>www/skin/p5p.css</key>
 		<dict>
@@ -280,21 +240,20 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>31</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>205</integer>
+				<integer>213</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>181</integer>
+			<integer>178</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>www/skin/p5p.js</string>
 		<string>www/skin/js/processing/processing.js</string>
-		<string>www/skin/js/jquery/jquery.ios.js</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

@@ -67,7 +67,13 @@
 			preloader.image = [UIImage imageNamed:@"Default-Portrait.png"];
 		} 
 		else {
-			preloader.image = [UIImage imageNamed:@"Default.png"];
+            
+            // screen
+            CGRect screen = [[UIScreen mainScreen] bounds];
+            
+            // phones
+			preloader.image = (screen.size.height / screen.size.width) > 1.5
+                                ? [UIImage imageNamed:@"Default-568h.png"] : [UIImage imageNamed:@"Default.png"];
 		}
 
 		preloader.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;

@@ -200,7 +200,7 @@
 	else if ([indexPath section] == SectionCreditsComponents) {
 		c = [components objectAtIndex:[indexPath row]];
 	}
-	else if ([indexPath section] == SectionCreditsAssets) {
+	else {
 		c = [assets objectAtIndex:[indexPath row]];
 	}
 	
