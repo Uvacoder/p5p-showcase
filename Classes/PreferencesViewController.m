@@ -59,15 +59,14 @@
 	[super loadView];
 	DLog();
 	
-	 // title
+    // title
 	self.navigationItem.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Preferences",@"Preferences")];
     
-    // prepare table view
+    // texture
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+    
+    // table
 	self.tableView.scrollEnabled = NO;
-	
-	// remove background for iPhone
-	self.tableView.backgroundColor = [UIColor clearColor];
-	self.tableView.opaque = YES;
 	self.tableView.backgroundView = nil;
 
 }
@@ -254,11 +253,31 @@
     return 0;
 }
 
+/*
+ * Header height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 45.0;
+}
+
+/*
+ * Footer height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    switch (section) {
+        case SectionPreferencesReset:
+            return 30;
+            break;
+        default:
+            return 0.00000000000000000001;
+            break;
+    }
+}
+
 
 
 #pragma mark -
 #pragma mark UITableViewDelegate Protocol
-
 
 /*
  * Section titles.
@@ -324,6 +343,7 @@
 				ctext.key = udPreferenceEmail;
 				ctext.text = (NSString*) [(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udPreferenceEmail];
 				ctext.placeholder = NSLocalizedString(@"Default Email Address",@"Default Email Address");
+                ctext.label = NSLocalizedString(@"Email",@"Email");
 				ctext.textLabel.text = NSLocalizedString(@"Email",@"Email");
 				[ctext update:YES];
 				
@@ -483,7 +503,7 @@
 				CellText *ctext = (CellText*) [tableView cellForRowAtIndexPath:indexPath];
 		
 				// push controller
-				CellTextViewController *tvController = [ctext textViewController:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+				CellTextViewController *tvController = [ctext textViewController];
 				tvController.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 				tvController.textField.keyboardType = UIKeyboardTypeEmailAddress;
 				[self.navigationController pushViewController:tvController animated:YES];

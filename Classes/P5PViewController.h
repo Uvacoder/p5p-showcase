@@ -38,10 +38,8 @@
 @protocol P5PDelegate <NSObject>
 - (void)navigateToRoot;
 - (void)navigateToSketch:(Sketch*)sketch;
-- (void)toggleCollections;
-- (void)openCollections;
-- (void)closeCollections;
 - (void)preloaded;
+- (UIViewController*)controller;
 @end
 
 /**
@@ -52,13 +50,6 @@
 	// view controllers
 	SketchesViewController *sketchesViewController;
 	SketchViewController *sketchViewController;
-	CollectionsViewController *collectionsViewController;
-	
-	// gestures
-	UITapGestureRecognizer *gestureModeCollectionsTap;
-	
-	// modes
-	BOOL modeCollections;
 	
 	// Preloader
 	PreloaderView *preloader;
@@ -71,7 +62,6 @@
 // Properties
 @property (nonatomic, retain) SketchesViewController *sketchesViewController;
 @property (nonatomic, retain) SketchViewController *sketchViewController;
-@property (nonatomic, retain) CollectionsViewController *collectionsViewController;
 @property BOOL modeCollections;
 
 @end

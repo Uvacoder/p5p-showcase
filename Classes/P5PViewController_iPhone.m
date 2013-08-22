@@ -21,7 +21,6 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import "P5PViewController_iPhone.h"
-#import "CollectionsViewController_iPhone.h"
 #import "SketchesViewController_iPhone.h"
 #import "SketchViewController_iPhone.h"
 
@@ -53,11 +52,6 @@
         SketchViewController_iPhone *skvc = [[SketchViewController_iPhone alloc] init];
 		self.sketchViewController = skvc;
         [skvc release];
-		
-		// init collection
-        CollectionsViewController_iPhone *cvc = [[CollectionsViewController_iPhone alloc] init];
-		self.collectionsViewController = cvc;
-        [cvc release];
 		
 		// return of the jedi
 		return self;

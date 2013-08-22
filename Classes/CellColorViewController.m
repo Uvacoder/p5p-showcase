@@ -23,6 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CellColorViewController.h"
 #import "CellColor.h"
+#import "P5PConstants.h"
 
 
 /*
@@ -203,8 +204,10 @@
         // clear
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             
-            // background pattern
-            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+            // texture
+            if (iOS6) {
+                self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+            }
             
             // button apply
             UIBarButtonItem *btnApply = [[UIBarButtonItem alloc] 

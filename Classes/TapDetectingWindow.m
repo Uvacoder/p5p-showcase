@@ -112,6 +112,22 @@
 }
 
 
+#pragma mark -
+#pragma mark Motions
+
+/*
+ * Motion.
+ */
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        [controllerThatObserves motionShake];
+    }
+}
+
+
+#pragma mark -
+#pragma mark Memory
+
 /*
 * Release memory.
 */

@@ -58,7 +58,7 @@
 		self.maxHandle.center = CGPointMake(self.frame.size.width * 0.8, sliderBarHeight * 0.5);
 		[self addSubview:self.maxHandle];
 		self.backgroundColor = [UIColor clearColor];
-		bgColor = CGColorRetain([UIColor colorWithRed:69/255.0 green:119/255.0 blue:203/255.0 alpha:1.0].CGColor);
+		bgColor = CGColorRetain([UIColor colorWithRed:1/255.0 green:122/255.0 blue:255/255.0 alpha:1.0].CGColor);
 		
 		//init
 		[self updateValues];
@@ -86,7 +86,7 @@
 		self.maxHandle.center = CGPointMake(self.frame.size.width * 0.8, sliderBarHeight * 0.5);
 		[self addSubview:self.maxHandle];
 		self.backgroundColor = [UIColor clearColor];
-		bgColor = CGColorRetain([UIColor colorWithRed:69/255.0 green:119/255.0 blue:203/255.0 alpha:1.0].CGColor);
+		bgColor = CGColorRetain([UIColor colorWithRed:1/255.0 green:122/255.0 blue:255/255.0 alpha:1.0].CGColor);
 		
 		//init
 		[self updateValues];
@@ -246,13 +246,10 @@
 	CGContextClearRect(context, self.bounds);
 	
 	
-	
-	
 	// handles and range
 	CGRect rect1 = CGRectMake(0, inset, self.minHandle.center.x, sliderBarHeight-2*inset);
 	CGRect rect2 = CGRectMake(self.minHandle.center.x, inset, self.maxHandle.center.x - self.minHandle.center.x, sliderBarHeight-2*inset);
 	CGRect rect3 = CGRectMake(self.maxHandle.center.x, inset, self.frame.size.width - self.maxHandle.center.x, sliderBarHeight-2*inset);
-	
 	
 	
 	// gradient start/end
@@ -260,20 +257,16 @@
     CGPoint bg_startPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMinY(self.bounds));
     CGPoint bg_endPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMaxY(self.bounds));
 	
-	
-	//add the right/left corners
+	// add the right/left corners
 	[self addToContext:context roundRect:rect3 withRoundedCorner1:NO corner2:YES corner3:YES corner4:NO radius:5.0f];
 	[self addToContext:context roundRect:rect1 withRoundedCorner1:YES corner2:NO corner3:NO corner4:YES radius:5.0f];
-	
 	
 	// draw background
     CGContextClip(context);
     CGContextDrawLinearGradient(context, bg_gradient, bg_startPoint, bg_endPoint, 0);
 	CGGradientRelease(bg_gradient), bg_gradient = NULL;
-
 	
-	
-	//draw middle rect
+	// draw middle rect
     CGContextRestoreGState(context);
 	CGContextSetFillColorWithColor(context, bgColor);
 	CGContextFillRect(context, rect2);

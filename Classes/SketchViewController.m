@@ -38,9 +38,10 @@
 */
 @interface SketchViewController (Helpers)
 - (void)exportSave:(id)sender;
-- (void)exportPrint:(id)sender;
 - (void)exportEmail:(id)sender;
 - (void)exportTwitter:(id)sender;
+- (void)exportFacebook:(id)sender;
+- (void)exportWeibo:(id)sender;
 @end
 @interface SketchViewController (AnimationHelpers)
 - (void)animationShowHideToolbarDone;
@@ -122,25 +123,21 @@
 	[tb setAutoresizingMask: (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight) ];
 	
 	
-	
 	// label
-	UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tb.frame.size.width/3.0, tb.frame.size.height)];
+	UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tb.frame.size.width/2.0, tb.frame.size.height)];
 	[lbl setText:@"P5P"];
     [lbl setBackgroundColor:[UIColor clearColor]];
     [lbl setTextColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]];
-    //[lbl setShadowColor:[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:0.95]];
-    //[lbl setShadowOffset:CGSizeMake(1,1)];
-	
+
 	// make it big
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		[lbl setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
-		[lbl setTextAlignment:UITextAlignmentCenter];
+		[lbl setFont:[UIFont fontWithName:@"Helvetica-Light" size:20]];
+		[lbl setTextAlignment:NSTextAlignmentCenter];
 	}
 	else {
-		[lbl setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
-		[lbl setTextAlignment:UITextAlignmentLeft];
+		[lbl setFont:[UIFont fontWithName:@"Helvetica-Light" size:14]];
+		[lbl setTextAlignment:NSTextAlignmentLeft];
 	}
-
 	
 	labelTitle = [lbl retain];
 	[lbl release];
@@ -161,21 +158,21 @@
 	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 		spacer.width = 0;
 	}
-	
-	// inset
-	UIBarButtonItem *inset = [[UIBarButtonItem alloc] 
-								   initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace 
-								   target:self
-								   action:nil];
-	inset.width = 5;
-	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+    
+    // inset
+	UIBarButtonItem *inset = [[UIBarButtonItem alloc]
+                              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                              target:self
+                              action:nil];
+	inset.width = iOS6 ? 20 : 30;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		inset.width = 0;
 	}
 	
 
-	// button back
-	UIBarButtonItem *btnBack = [[UIBarButtonItem alloc]
-								initWithImage:[UIImage imageNamed:@"btn_back.png"]  
+	// button sketches
+	UIBarButtonItem *btnSketches = [[UIBarButtonItem alloc]
+								initWithImage:[UIImage imageNamed:@"btn_sketches.png"]
 								style:UIBarButtonItemStylePlain
 								target:self
 								action:@selector(actionBack:)];
@@ -208,9 +205,9 @@
 								  
 								  
 	// buttons
-	NSArray *buttons = [NSArray arrayWithObjects: 
-							inset,
-							btnBack,
+	NSArray *buttons = [NSArray arrayWithObjects:
+							btnSketches,
+                            inset,
 							flex,
 							btnTitle,
 							flex,
@@ -219,13 +216,12 @@
 							btnExport,
 							spacer,
 							btnRefresh,
-							inset,
 							nil];
 	[flex release];
 	[spacer release];
-	[inset release];
+    [inset release];
 	[btnTitle release];
-	[btnBack release];
+	[btnSketches release];
 	[btnSettings release];
 	[btnExport release];
 	[btnRefresh release];
@@ -313,13 +309,7 @@
 		if ([(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefaultBool:udPreferenceToolbarAutohideEnabled]) {
 			[self performSelector:@selector(fadeoutToolbar) withObject:nil afterDelay:kToolbarAutohideTime];
 		}
-        
-        // show sketch notification
-        NSString *sketchNotification = (NSString*) [(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] retrieveNotification:udNoteSketch];
-        if (sketchNotification) {
-            [note notificationInfo:sketchNotification];
-            [note showNotificationAfterDelay:1.5];
-        }
+
 	
 	}
     
@@ -529,13 +519,23 @@ static BOOL toolbarHidden = NO;
 
 }
 
+/*
+ * Shake handler.
+ */
+- (void)motionShake {
+    FLog();
+    
+    // fresh n trendy
+    if (! self.view.hidden) {
+        [htmlView refreshPage];
+    }
+}
 
 
 
 
 #pragma mark -
 #pragma mark Actions
-
 
 /*
 * Back to the future.
@@ -590,15 +590,29 @@ static BOOL toolbarHidden = NO;
 		exportActionSheet = nil;
 		return;
 	}
+    
+    // services
+    BOOL email = [MailComposeController canSendMail];
+    BOOL twitter = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
+    BOOL facebook = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
+    BOOL weibo = [SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo];
+    
 	
 	// export options
 	NSMutableArray *exportOptions = [[NSMutableArray alloc] init];
 	[exportOptions addObject:NSLocalizedString(@"Save as Image",@"Save as Image")];
-	[exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
-    if (! iOS4) {
+    if (email) {
+        [exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
+    }
+    if (twitter) {
         [exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
     }
-	
+    if (facebook) {
+        [exportOptions addObject:NSLocalizedString(@"Post on Facebook",@"Post on Facebook")];
+    }
+    if (weibo) {
+        [exportOptions addObject:NSLocalizedString(@"Publish on Weibo",@"Publish on Weibo")];
+    }
 	
 	// action sheet
 	exportActionSheet = [[UIActionSheet alloc]
@@ -623,6 +637,7 @@ static BOOL toolbarHidden = NO;
 	else {
 		[exportActionSheet showInView:self.view];
 	}
+
 }
 
 /*
@@ -689,84 +704,6 @@ static BOOL toolbarHidden = NO;
 	
 }
 
-/*
-* Print.
-*/
-- (void)exportPrint:(id)sender {
-	DLog();
-	
-	// track
-	[Tracker trackEvent:TEventExport action:@"Print" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
-	
-	// check availability
-	if (! [UIPrintInteractionController isPrintingAvailable]) {
-			
-		// note
-		[note noteError:@"Printing not supported." ];
-		[note showNote];
-		[note dismissNoteAfterDelay:2.4];
-	}
-	else {
-	
-		// note
-		[note noteActivity:@"Capture Screenshot..."];
-		[note showNote];
-	
-		// screenshot
-		UIImage *screenshot = [htmlView screenshot:NO];
-		
-		// print controller
-		UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
-        pic.delegate = self;
-		
-		// print info
-		UIPrintInfo *printInfo = [UIPrintInfo printInfo];
-		printInfo.outputType = UIPrintInfoOutputGeneral;
-		printInfo.jobName = [NSString stringWithFormat:@"P5P %@",sketch.name];
-		printInfo.orientation = UIPrintInfoOrientationPortrait;
-		pic.printInfo = printInfo;
-		pic.showsPageRange = NO;
-		pic.printingItem = screenshot;
-		
-		// handler
-		void (^completionHandler)(UIPrintInteractionController *, BOOL, NSError *) =
-		^(UIPrintInteractionController *printController, BOOL completed, NSError *error) {
-			
-			// error
-			if (!completed && error) {
-				UIAlertView *alert = [[UIAlertView alloc]
-									  initWithTitle:@"Print Error" 
-									  message:[NSString stringWithFormat:@"Printing could not complete because of error: %@", error]
-									  delegate:nil 
-									  cancelButtonTitle: @"OK"
-									  otherButtonTitles:nil];
-				[alert setTag:P5PSketchPrintError];
-				[alert show];    
-				[alert release];
-			}
-			
-			// completed
-			else if	(completed) {
-				[note noteSuccess:@"Printing completed."];
-				[note showNote];
-				[note dismissNote];
-			}
-		};
-		
-
-		// the show must go on
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			[pic presentFromBarButtonItem:sender animated:YES completionHandler:completionHandler];
-		} else {
-			[pic presentAnimated:YES completionHandler:completionHandler];
-		}
-		
-		// dismiss
-		[note dismissNote];
-
-	}
-
-}
 
 /*
 * Email.
@@ -778,23 +715,15 @@ static BOOL toolbarHidden = NO;
 	[Tracker trackEvent:TEventExport action:@"Email" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
 	
 	// check mail support
-	if (! [MFMailComposeViewController canSendMail]) {
+	if ([MailComposeController canSendMail]) {
 
-		// note
-		[note noteError:@"Email not configured." ];
-		[note showNote];
-		[note dismissNoteAfterDelay:2.4];
-
-	}
-	else {
-	
 		// date formatter
 		static NSDateFormatter *exportDateFormatter = nil;
 		if (exportDateFormatter == nil) {
 			exportDateFormatter = [[NSDateFormatter alloc] init];
 			[exportDateFormatter setDateFormat:@"yyyyMMdd-HHmm"];
 		}
-	
+        
 		// screenshot
 		UIImage *screenshot = [htmlView screenshot:NO];
 		
@@ -802,7 +731,7 @@ static BOOL toolbarHidden = NO;
 		[self setModeModal:YES]; // avoids unload in case view is hidden
 		
 		// mail composer
-		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+		MailComposeController *composer = [[MailComposeController alloc] init];
 		composer.mailComposeDelegate = self;
         composer.navigationBar.barStyle = UIBarStyleBlack;
         
@@ -820,23 +749,24 @@ static BOOL toolbarHidden = NO;
 		
 		// subject
 		[composer setSubject:[NSString stringWithFormat:@"[P5P] %@",sketch.name]];
-	 
+        
 		// message
 		NSString *message = @"\n\n\n---\nGenerated with P5P.\nhttp://p5p.cecinestpasparis.net";
 		[composer setMessageBody:message isHTML:NO];
-	 
+        
 		// attachment
 		NSData *data = UIImagePNGRepresentation(screenshot);
-		[composer addAttachmentData:data mimeType:@"image/png" 
-					fileName:[NSString stringWithFormat:@"p5p_%@_%@",sketch.sid,[exportDateFormatter stringFromDate:[NSDate date]]]];
-	 
+		[composer addAttachmentData:data mimeType:@"image/png"
+                           fileName:[NSString stringWithFormat:@"p5p_%@_%@",sketch.sid,[exportDateFormatter stringFromDate:[NSDate date]]]];
+        
 		// show off
-		[self presentModalViewController:composer animated:YES];
-	 
+        [self presentViewController:composer animated:YES completion:nil];
+        
 		// release
 		[composer release];
-		
+
 	}
+
 }
 
 /*
@@ -852,47 +782,159 @@ static BOOL toolbarHidden = NO;
 	UIImage *screenshot = [htmlView screenshot:NO];
 	
 	// modal mode
-	[self setModeModal:YES]; // avoids unload in case view is hidden
+	[self setModeModal:YES];
     
-    
-    // check twitter support
-    if(NSClassFromString(@"TWTweetComposeViewController") != nil) {
+    // check support
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         
-        // twitter composition view controller
-        TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
+        // controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        // initial tweet text
-        [tweetViewController setInitialText:[NSString stringWithFormat:@"Sketch %@. Generated with P5P.\nhttp://p5p.cecinestpasparis.net",sketch.name]];
+        // text
+        [composeViewController setInitialText:[NSString stringWithFormat:@"Sketch %@. Generated with P5P.\nhttp://p5p.cecinestpasparis.net",sketch.name]];
         
-        // sketch
-        [tweetViewController addImage:screenshot];
+        // image
+        [composeViewController addImage:screenshot];
+        
         
         // completion handler
-        [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
             
-            // whatever
+            // leave modal mode
+            [self setModeModal:NO];
+            
+            // dismiss the composition view controller
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            // result
             switch (result) {
-                case TWTweetComposeViewControllerResultCancelled:
-                    FLog("Twitter: cancel");
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
                     break;
-                case TWTweetComposeViewControllerResultDone:
-                    FLog("Twitter: done");
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
                     break;
                 default:
                     break;
             }
             
-            // leave modal mode
-            [self setModeModal:NO]; 
-            
-            // dismiss the tweet composition view controller
-            [self dismissModalViewControllerAnimated:YES];
         }];
         
+        // modal
+        [self presentViewController:composeViewController animated:YES completion:nil];
+    }
+    
+	
+}
+
+
+/*
+ * Facebook.
+ */
+- (void)exportFacebook:(id)sender {
+	DLog();
+	
+	// track
+	[Tracker trackEvent:TEventExport action:@"Facebook" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
+	
+	// screenshot
+	UIImage *screenshot = [htmlView screenshot:NO];
+	
+	// modal mode
+	[self setModeModal:YES];
+    
+    // check support
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        
+        // controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        // text
+        [composeViewController setInitialText:[NSString stringWithFormat:@"Sketch %@. Generated with P5P.\nhttp://p5p.cecinestpasparis.net",sketch.name]];
+        
+        // image
+        [composeViewController addImage:screenshot];
+        
+        
+        // completion handler
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            // leave modal mode
+            [self setModeModal:NO];
+            
+            // result
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
+                    break;
+                default:
+                    break;
+            }
+            
+        }];
         
         // modal
-        [self presentModalViewController:tweetViewController animated:YES];
-        [tweetViewController release];
+        [self presentViewController:composeViewController animated:YES completion:nil];
+    }
+    
+}
+
+
+/*
+ * Weibo.
+ */
+- (void)exportWeibo:(id)sender {
+	DLog();
+	
+	// track
+	[Tracker trackEvent:TEventExport action:@"Weibo" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
+	
+	// screenshot
+	UIImage *screenshot = [htmlView screenshot:NO];
+	
+	// modal mode
+	[self setModeModal:YES];
+    
+    // check support
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
+        
+        // controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+        
+        // text
+        [composeViewController setInitialText:[NSString stringWithFormat:@"Sketch %@. Generated with P5P.\nhttp://p5p.cecinestpasparis.net",sketch.name]];
+        
+        // image
+        [composeViewController addImage:screenshot];
+        
+        // completion handler
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            // leave modal mode
+            [self setModeModal:NO];
+            
+            // dismiss the composition view controller
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            // result
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
+                    break;
+                default:
+                    break;
+            }
+            
+        }];
+        
+        // modal
+        [self presentViewController:composeViewController animated:YES completion:nil];
     }
     
 	
@@ -1044,19 +1086,28 @@ static BOOL toolbarHidden = NO;
 	
 	// sender
 	UIBarButtonItem *exportButton = [toolbar.items objectAtIndex:7];
-
-	
-	// save
-    if (buttonIndex == 0) {
-		[self exportSave:exportButton];
-    }
-	// email
-	else if (buttonIndex == 1) {
-		[self exportEmail:exportButton];
-    }
-	// twitter
-	else if (buttonIndex == 2) {
-		[self exportTwitter:exportButton];
+    
+    // action
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        
+        // service
+        NSString *service = [actionSheet buttonTitleAtIndex:buttonIndex];
+        if ([service rangeOfString:@"Save"].location != NSNotFound) {
+            [self exportSave:exportButton];
+        }
+        if ([service rangeOfString:@"Email"].location != NSNotFound) {
+            [self exportEmail:exportButton];
+        }
+        else if ([service rangeOfString:@"Twitter"].location != NSNotFound) {
+            [self exportTwitter:exportButton];
+        }
+        else if ([service rangeOfString:@"Facebook"].location != NSNotFound) {
+            [self exportFacebook:exportButton];
+        }
+        else if ([service rangeOfString:@"Weibo"].location != NSNotFound) {
+            [self exportWeibo:exportButton];
+        }
+        
     }
 	
 	// release
@@ -1068,26 +1119,6 @@ static BOOL toolbarHidden = NO;
 }
 
 
-#pragma mark -
-#pragma mark UIAlertViewDelegate Delegate
-
-
-/*
- * Alert view button clicked.
- */
-- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	FLog();
-	
-	// determine alert
-	switch ([actionSheet tag]) {
-
-		// have a break
-		default:
-		break;
-	}
-	
-	
-}
 
 
 
@@ -1120,7 +1151,7 @@ static BOOL toolbarHidden = NO;
 	}
 	
 	// close modal
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 	
 	// leave modal mode
 	[self setModeModal:NO]; 

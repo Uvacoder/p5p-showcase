@@ -37,23 +37,19 @@
 */
 - (void)actionSettings:(id)sender {
 	DLog();
-	
-	// enter modal moda
-	//[self setModeModal:YES]; // in case view is hidden
  
 	// navigation controller
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
 	navController.navigationBar.barStyle = UIBarStyleBlack;
+    navController.navigationBar.translucent = NO;
 	navController.toolbar.barStyle = UIBarStyleBlack;
-	navController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_settings.png"]];
+    navController.toolbar.translucent = NO;
+	navController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
 	[navController setToolbarHidden:NO animated:NO];
 
- 
-	// show the navigation controller modally
+	// show
 	[navController setModalTransitionStyle:UIModalTransitionStylePartialCurl];
-	[self presentModalViewController:navController animated:YES];
- 
-	// Clean up resources
+    [self presentViewController:navController animated:YES completion:nil];
 	[navController release];	
 	
 	// everything super
@@ -72,10 +68,7 @@
 	FLog();
 	
 	// pop it goes
-	[self dismissModalViewControllerAnimated:YES];
-	
-	// leave modal mode
-	//[self setModeModal:NO]; // in case view is hidden
+    [self dismissViewControllerAnimated:YES completion:nil];
 	
 	// refresh super
 	[super settingsApply];

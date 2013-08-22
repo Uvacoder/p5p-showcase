@@ -25,25 +25,9 @@
 #import "P5PConstants.h"
 #import "SketchesViewController.h"
 #import "SketchViewController.h"
-#import "CollectionsViewController.h"
 #import "PreloaderView.h"
 #import "NoteView.h"
 
-
-
-/**
- * P5P Stack.
- */
-@interface P5PViewController (AnimationHelpers)
-- (void)animationNavigateToSketchDone;
-- (void)animationNavigateToRootDone;
-- (void)animationOpenCollectionsDone;
-- (void)animationCloseCollectionsDone;
-@end
-
-@interface P5PViewController (GestureHelpers)
-- (void)gestureModeCollectionsTap:(UITapGestureRecognizer*)recognizer;
-@end
 
 
 /**
@@ -52,18 +36,6 @@
 @implementation P5PViewController
 
 
-#pragma mark -
-#pragma mark Constants
-
-// constants
-#define kAnimateTimeNavigateSketch	0.45f
-#define kAnimateTimeNavigateRoot	0.21f
-
-#define kOffsetCollection			115.0f
-#define kAnimateOpacityCollection	0.3f
-#define kAnimateTimeCollectionOpen	0.36f
-#define kAnimateTimeCollectionClose	0.18f
-
 
 #pragma mark -
 #pragma mark Properties
@@ -71,8 +43,6 @@
 // accessors
 @synthesize sketchesViewController;
 @synthesize sketchViewController;
-@synthesize collectionsViewController;
-@synthesize modeCollections;
 
 
 #pragma mark -
@@ -86,9 +56,6 @@
 	// init super
 	if (self = [super init]) {
 		GLog();
-	
-		// field defaults
-		self.modeCollections = NO;
 		
 		// return
 		return self;
@@ -111,13 +78,12 @@
 
 	// blanc view
 	self.view = [[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-	self.view.backgroundColor = [UIColor colorWithRed:255.0/236.0 green:255.0/236.0 blue:255.0/228.0 alpha:1.0];
+	self.view.backgroundColor = [UIColor blackColor];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	
 	// prepare controlers
 	sketchesViewController.delegate = self;
 	sketchViewController.delegate = self;
-	collectionsViewController.delegate = self;
 
 	
 	// prepare views
@@ -129,22 +95,10 @@
 	sketchViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	sketchViewController.view.hidden = YES;
 	
-	collectionsViewController.view.frame = CGRectMake(sframe.origin.x, sframe.size.height-kOffsetCollection, sframe.size.width, kOffsetCollection);
-	collectionsViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	collectionsViewController.view.hidden = YES;
-	
-	
-	// gestures
-	gestureModeCollectionsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureModeCollectionsTap:)];
-	[gestureModeCollectionsTap setNumberOfTapsRequired:1];
-
-	
  
 	// add view
 	[self.view addSubview:sketchViewController.view];
 	[self.view sendSubviewToBack:sketchViewController.view];
-	[self.view addSubview:collectionsViewController.view];
-	[self.view sendSubviewToBack:collectionsViewController.view];
 	
 	// show default view controller
 	[self.view addSubview:sketchesViewController.view];
@@ -189,29 +143,24 @@
 }
 
 
+
 #pragma mark -
-#pragma mark Rotation support
+#pragma mark Controller
 
 /*
-* Rotate is the new black.
+* Rotation.
 */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return NO;
 }
 
-
-#pragma mark -
-#pragma mark Gesture Recognizer.
-
 /*
-* Sketches Tap.
-*/
-- (void)gestureModeCollectionsTap:(UITapGestureRecognizer*)recognizer {
-	FLog();
-	
-	// close
-	[self closeCollections];
+ * Status.
+ */
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
+
 
 
 #pragma mark -
@@ -223,46 +172,41 @@
 - (void)navigateToSketch:(Sketch*)sketch {
 	DLog();
 	
-	// check mode
-	if (self.modeCollections) {
-		return;
-	}
-	
 	// prepare controllers
 	sketchViewController.sketch = sketch;
 	[sketchViewController viewWillAppear:YES];
 	[sketchesViewController viewWillDisappear:YES];
  
 	// prepare view
-	sketchViewController.view.alpha = 0.0f;
-	sketchViewController.view.hidden = NO;
+    [sketchesViewController.view setTransform:CGAffineTransformMakeScale(1.0,1.0)];
+    [sketchViewController.view setCenter:CGPointMake(self.view.frame.size.width * 1.5, self.view.frame.size.height / 2.0)];
+    [sketchViewController.view setHidden:NO];
+    [self.view bringSubviewToFront:sketchViewController.view];
  
 	// animate
-	[UIView beginAnimations:@"navigate_sketch" context:nil];
-	[UIView setAnimationDuration:kAnimateTimeNavigateSketch];
-		
-		// animate sketch
-		sketchViewController.view.alpha = 1.0f;
-		
-		// animate sketches
-		sketchesViewController.view.alpha = 0.0f;
-	[UIView commitAnimations];
- 
-	// clean it up
-	[self performSelector:@selector(animationNavigateToSketchDone) withObject:nil afterDelay:kAnimateTimeNavigateSketch];
-}
-- (void)animationNavigateToSketchDone {
-	GLog();
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+        
+                         // animate
+                         [sketchesViewController.view setTransform:CGAffineTransformMakeScale(0.98,0.98)];
+                         [sketchViewController.view setCenter:CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)];
+        
+                     }
+                     completion:^(BOOL finished) {
+    
+                         // sketches view
+                         [sketchesViewController viewDidDisappear:YES];
+                         [sketchesViewController.view setHidden:YES];
 	
-	// sketches view
-	[sketchesViewController viewDidDisappear:YES];
-	[sketchesViewController.view setHidden:YES];
-	[self.view sendSubviewToBack:sketchesViewController.view];
-	
-	// sketch view
-	[sketchViewController viewDidAppear:YES];
-	[self.view bringSubviewToFront:sketchViewController.view];
+                         // sketch view
+                         [sketchViewController viewDidAppear:YES];
+                         [self.view bringSubviewToFront:sketchViewController.view];
+    
+                     }
+     ];
+    
 }
+
 
 
 /**
@@ -271,158 +215,38 @@
 - (void)navigateToRoot {
 	DLog();
 	
-	// check mode
-	if (self.modeCollections) {
-		return;
-	}
-	
 	// prepare controllers
 	[sketchesViewController viewWillAppear:YES];
 	[sketchViewController viewWillDisappear:YES];
  
 	// prepare view
-	sketchesViewController.view.alpha = 0.0f;
-	sketchesViewController.view.hidden = NO;
+    [sketchesViewController.view setTransform:CGAffineTransformMakeScale(0.98,0.98)];
+    [sketchesViewController.view setHidden:NO];
+    [sketchViewController.view setCenter:CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0)];
  
 	// animate
-	[UIView beginAnimations:@"navigateo_root" context:nil];
-	[UIView setAnimationDuration:kAnimateTimeNavigateRoot];
-	
-		// animate sketches
-		sketchesViewController.view.alpha = 1.0f;
-		
-		// animate sketch
-		sketchViewController.view.alpha = 0.0f;
-		
-	[UIView commitAnimations];
- 
-	// clean it up
-	[self performSelector:@selector(animationNavigateToRootDone) withObject:nil afterDelay:kAnimateTimeNavigateRoot];
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         // animate
+                         [sketchesViewController.view setTransform:CGAffineTransformMakeScale(1.0,1.0)];
+                         [sketchViewController.view setCenter:CGPointMake(self.view.frame.size.width * 1.5, self.view.frame.size.height / 2.0)];
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         // sketch view
+                         [sketchViewController viewDidDisappear:YES];
+                         [sketchViewController.view setHidden:YES];
+                         [self.view sendSubviewToBack:sketchViewController.view];
+                         
+                         // sketches view
+                         [sketchesViewController viewDidAppear:YES];
+                         [self.view bringSubviewToFront:sketchesViewController.view];
+                         
+                     }
+     ];
 }
-- (void)animationNavigateToRootDone {
-	GLog();
-	
-	// sketch view
-	[sketchViewController viewDidDisappear:YES];
-	[sketchViewController.view setHidden:YES];
-	[self.view sendSubviewToBack:sketchViewController.view];
-	
-	// sketches view
-	[sketchesViewController viewDidAppear:YES];
-	[self.view bringSubviewToFront:sketchesViewController.view];
-}
-
-/**
-* Toggles the collections view.
-*/
-- (void)toggleCollections {
-	DLog();
-	// depeche mode
-	if (modeCollections) {
-		[self closeCollections];
-	}
-	else {
-		[self openCollections];
-	}
-
-}
-
-/**
-* Shows the collections view.
-*/
-- (void)openCollections {
-	DLog();
-	
-	// mode
-	[self setModeCollections:YES];
-	[sketchesViewController.view addGestureRecognizer:gestureModeCollectionsTap];
-	
-	// prepare controllers
-	[collectionsViewController viewWillAppear:YES];
-	[self.view bringSubviewToFront:sketchesViewController.view];
- 
-	// prepare view
-	sketchesViewController.view.alpha = 1.0;
-	collectionsViewController.view.hidden = NO;
- 
-	// animate
-	[UIView beginAnimations:@"collection_open" context:nil];
-	[UIView setAnimationDuration:kAnimateTimeCollectionOpen];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-
-		// animate sketches
-		CGPoint center = sketchesViewController.view.center;
-		center.y -= kOffsetCollection;
-		sketchesViewController.view.center = center;
-		sketchesViewController.view.alpha = kAnimateOpacityCollection;
-
-	
-	[UIView commitAnimations];
- 
-	// clean it up
-	[self performSelector:@selector(animationOpenCollectionsDone) withObject:nil afterDelay:kAnimateTimeCollectionOpen];
-}
-- (void)animationOpenCollectionsDone {
-	GLog();
-	
-	// collections view
-	[collectionsViewController viewDidAppear:YES];
-	[self.view bringSubviewToFront:collectionsViewController.view];
-}
-
-
-/**
-* Hides the collections view.
-*/
-- (void)closeCollections {
-	DLog();
-	
-	// reload
-	[sketchesViewController reloadSketches];
-	
-	// prepare controllers
-	[collectionsViewController viewWillDisappear:YES];
-	[self.view bringSubviewToFront:sketchesViewController.view];
-	[sketchesViewController viewWillAppear:YES];
- 
-	// prepare view
-	sketchesViewController.view.alpha = kAnimateOpacityCollection;
- 
-	// animate
-	[UIView beginAnimations:@"collection_close" context:nil];
-	[UIView setAnimationDuration:kAnimateTimeCollectionClose];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-	
-		// animate sketches
-		CGPoint center = sketchesViewController.view.center;
-		center.y += kOffsetCollection;
-		sketchesViewController.view.center = center;
-		sketchesViewController.view.alpha = 1.0f;
-
-		
-	[UIView commitAnimations];
- 
-	// clean it up
-	[self performSelector:@selector(animationCloseCollectionsDone) withObject:nil afterDelay:kAnimateTimeCollectionClose];
-}
-- (void)animationCloseCollectionsDone {
-	GLog();
-	
-	// collections view
-	[collectionsViewController viewDidDisappear:YES];
-	[collectionsViewController.view setHidden:YES];
-	
-	// sketches
-	[collectionsViewController viewDidAppear:YES];
-	
-	
-	// mode
-	[sketchesViewController.view removeGestureRecognizer:gestureModeCollectionsTap];
-	[self setModeCollections:NO];
-}
-
-
-
 
 /**
 * Shows the sketches view.
@@ -432,6 +256,13 @@
 	
 	// dismiss preloader
 	[preloader dismissPreloader];
+}
+
+/**
+ * Returns the controller.
+ */
+- (UIViewController*)controller {
+    return self;
 }
 
 
@@ -453,18 +284,9 @@
 	[sketchViewController.view removeFromSuperview];
 	[sketchViewController viewDidDisappear:NO];
 	
-	[collectionsViewController viewWillDisappear:NO];
-	[collectionsViewController.view removeFromSuperview];
-	[collectionsViewController viewDidDisappear:NO];
-	
-	// gestures
-	[gestureModeCollectionsTap release];
-
-	
 	// release resources
     [sketchesViewController release];
 	[sketchViewController release];
-	[collectionsViewController release];
 	
 	// release global
     [super dealloc];

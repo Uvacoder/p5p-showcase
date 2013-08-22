@@ -15,7 +15,7 @@ public class Colors {
     public Colors() {
         
         // bgcolor
-        bgcolor = color(255,252,240);
+        bgcolor = color(255,253,245);
         
         // default colors
         colors = new color[6];

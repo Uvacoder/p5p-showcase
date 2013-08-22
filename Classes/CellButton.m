@@ -21,6 +21,7 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import "CellButton.h"
+#import "P5PConstants.h"
 
 /*
 * Helper Stack.
@@ -58,33 +59,61 @@
         return nil;
     }
 	
-	// self
-	self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	self.autoresizesSubviews = YES;
-	self.backgroundColor = [UIColor clearColor];
-	self.opaque = YES;
+    // self
+    self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleHeight;
+    self.autoresizesSubviews = YES;
+    self.accessoryView = nil;
+    self.backgroundColor = [UIColor clearColor];
+    
+    // remove background view
+    self.backgroundView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    
+    // content view
+    self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.contentView.autoresizesSubviews = YES;
+    self.contentView.backgroundColor = [UIColor clearColor];
 	
 	
 	// button
-	int strangeoffset = -19;
-	if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)) {
-		strangeoffset = 160;
-	}
-	UIButton *buttonObj = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	buttonObj.frame = CGRectMake(0, 0, self.frame.size.width+strangeoffset, 45); 
-	buttonObj.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-	[buttonObj setTitle:@"Button" forState:UIControlStateNormal];
+    UIButton *buttonObj = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonObj.backgroundColor = [UIColor whiteColor];
+    buttonObj.frame = CGRectZero;
+    [buttonObj.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:16.0]];
+    [buttonObj setTitleEdgeInsets: iOS6 ? UIEdgeInsetsMake(-2, 5, 0, 5) : UIEdgeInsetsMake(0, 5, 0, 5)];
+    [buttonObj setTitleColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1] forState:UIControlStateNormal];
+    [buttonObj setTitleColor:[UIColor colorWithRed:60/255.0 green:60/255.0 blue:60/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [buttonObj setTitle:@"Button" forState:UIControlStateNormal];
+    if (iOS6) {
+        buttonObj.layer.cornerRadius = 6;
+        buttonObj.layer.borderWidth = 1;
+        buttonObj.layer.borderColor = [UIColor colorWithRed:205/255.0 green:205/255.0 blue:205/255.0 alpha:1.0].CGColor;
+    }
 				
 	// targets and actions
 	[buttonObj addTarget:self action:@selector(buttonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
 				
-	// accessory
-	self.buttonAccessory = buttonObj;
-	self.accessoryView = buttonAccessory;
+	// add
+    self.buttonAccessory = buttonObj;
+    [self.contentView addSubview:buttonAccessory];
+    [self bringSubviewToFront:buttonAccessory];
 
     // return
     return self;
 }
+
+/*
+ * Layout.
+ */
+- (void)layoutSubviews {
+    GLog();
+    
+    // button
+    CGRect fButton = CGRectInset(self.contentView.frame, iOS6 ? (iPad ? 30 : 10) : 0, 0);
+    fButton.size.height = iOS6 ? 40 : 45;
+    self.buttonAccessory.frame = fButton;
+    
+}
+
 
 /*
  * Disable highlighting of currently selected cell.

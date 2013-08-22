@@ -118,6 +118,9 @@ static const NSInteger kGANDispatchPeriodSec = 20;
 /**
 * Tracks an event.
 */
++ (void)trackEvent:(NSString *)category action:(NSString *)action {
+    [self trackEvent:category action:action label:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+}
 + (void)trackEvent:(NSString*)category action:(NSString*)action label:(NSString*)label {
 	DLog(@"%@ %@ %@",category,action,label);
 	

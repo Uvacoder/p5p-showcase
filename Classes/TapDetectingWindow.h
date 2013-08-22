@@ -28,6 +28,7 @@
 @protocol TapDetectingWindowDelegate
 - (void)singleTap:(id)tapPoint;
 - (void)doubleTap:(id)tapPoint;
+- (void)motionShake;
 @end
 
 /*

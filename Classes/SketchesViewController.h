@@ -73,7 +73,6 @@
 
 // Action Methods
 - (void)actionInfo:(id)sender;
-- (void)actionCollections:(id)sender;
 
 
 @end

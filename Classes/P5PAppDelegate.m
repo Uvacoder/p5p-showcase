@@ -97,8 +97,8 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	[Tracker startTracker];
 	[Tracker trackPageView:@"/"];
 	
-	// customize appearance
-	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];	
+	// appearance
+	[self appearance];
 	
 	// version
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -183,10 +183,7 @@ NSString *STORE_DEFAULT = @"P5P_default";
 		
 	// set version
 	[userDefaults setObject:appVersion forKey:udInformationAppVersion];
-    
-    
-    // notification sketch
-    [self storeNotification:NSLocalizedString(@"Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.", @"Access the sketch settings, export and refresh above. DoubleTap top to show/hide toolbar.") type:udNoteSketch];
+
 	
 	// load data
 	[self loadData];
@@ -209,6 +206,57 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	
 	// load data
 	[self loadData];
+}
+
+/*
+ * Appearance.
+ */
+- (void)appearance {
+    FLog();
+    
+    // ios7
+    if (! iOS6) {
+        
+        // navbar
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                              nil]];
+        
+        
+        // toolbar
+        [[UIToolbar appearance] setTintColor:[UIColor whiteColor]];
+        
+        // buttons
+        [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateNormal];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateHighlighted];
+        [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:0.9], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateDisabled];
+        
+        // controls
+        [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:1/255.0 green:122/255.0 blue:255/255.0 alpha:1]];
+        
+        // popover
+        [[UINavigationBar appearanceWhenContainedIn:[UIPopoverController class], nil] setTintColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0]];
+        [[UINavigationBar appearanceWhenContainedIn:[UIPopoverController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                                              [UIFont fontWithName:@"Helvetica" size:18], UITextAttributeFont,
+                                                                                                              [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                                                                              nil]];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UIPopoverController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateNormal];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UIPopoverController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateHighlighted];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UIPopoverController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                              [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:0.9], UITextAttributeTextColor,
+                                                              nil] forState:UIControlStateDisabled];
+    }
 }
 
 
@@ -238,47 +286,6 @@ NSString *STORE_DEFAULT = @"P5P_default";
 }
 
 
-/*
- * Loads the collections.
- */
-- (NSMutableArray*)loadCollections {
-	DLog();
-	
-	// fetch data request
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Collection"
-											  inManagedObjectContext:managedObjectContext];
-	[request setEntity:entity];
-	
-	
-	// sort descriptor
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-										initWithKey:@"sort" ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor,
-								nil];
-	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
-	
-	// execute request
-	NSError *error;
-	NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-	if (mutableFetchResults == nil) {
-		// handle the error
-		NSLog(@"P5P CoreData Error\n%@\n%@", error, [error userInfo]);
-	}
-	
-	// data
-	NSMutableArray *data = [[[NSMutableArray alloc] initWithArray:mutableFetchResults] autorelease];
-	
-	// release
-	[mutableFetchResults release];
-	[request release];
-	
-	// have some collections
-	return data;
-}
-
 
 /*
  * Loads the sketches.
@@ -304,12 +311,8 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	NSError *error;
 	NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
 	if (mutableFetchResults == nil) {
-		// handle the error
 		NSLog(@"P5P CoreData Error\n%@\n%@", error, [error userInfo]);
 	}
-	
-	// preferences
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	// sketches
 	NSMutableArray *sketches = [[[NSMutableArray alloc] init] autorelease];
@@ -318,16 +321,12 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	NSMutableArray *collections = [[NSMutableArray alloc] initWithArray:mutableFetchResults];
 	for (Collection *collection in collections) {
 	
-		// disabled
-		BOOL collectionDisabled = [userDefaults boolForKey:[NSString stringWithFormat:@"%@_%@",udCollectionDisabled,collection.cid]];
-		if (! collectionDisabled) {
-			// sketches
-			NSMutableArray *collectionSketches = [NSMutableArray arrayWithArray:[collection.sketches allObjects]];
-			[collectionSketches sortUsingDescriptors:sortDescriptors];
+		// sketches
+        NSMutableArray *collectionSketches = [NSMutableArray arrayWithArray:[collection.sketches allObjects]];
+        [collectionSketches sortUsingDescriptors:sortDescriptors];
 		
-			// add
-			[sketches addObjectsFromArray:collectionSketches];
-		}
+        // add
+        [sketches addObjectsFromArray:collectionSketches];
 		
 	}
 	[collections release];
@@ -342,22 +341,6 @@ NSString *STORE_DEFAULT = @"P5P_default";
 	return sketches;
 }
 
-/**
-* Disables a collection.
-*/
-- (void)disableCollection:(NSString*)cid disabled:(BOOL)flag {
-	DLog(@"collection = %@, disabled = %@",cid,flag ? @"YES" : @"NO");
-	
-	// track
-	[Tracker trackEvent:TEventCollection action:(flag ? @"Disable" : @"Enable") label:[NSString stringWithFormat:@"%@",cid]];
-	
-	// preferences
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
-	// settings
-	[userDefaults setBool:flag forKey:[NSString stringWithFormat:@"%@_%@",udCollectionDisabled,cid]];
-	[userDefaults synchronize];
-}
 
 /**
  * Returns the path to the application's Documents directory.

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E7C29612-E858-48AA-A36A-2829AAFE50E8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>P5P</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3FC2C936-AC61-4E66-83F0-F042EF9E079D</key>
+		<string>https://github.com/cnpp/P5P.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>P5P.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3FC2C936-AC61-4E66-83F0-F042EF9E079D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/cnpp/P5P.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3FC2C936-AC61-4E66-83F0-F042EF9E079D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3FC2C936-AC61-4E66-83F0-F042EF9E079D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>P5P</string>
+		</dict>
+	</array>
+</dict>
+</plist>

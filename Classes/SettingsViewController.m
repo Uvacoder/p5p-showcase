@@ -79,11 +79,10 @@
 	// iPad
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        // pattern view
-        UIView *pattern = [[UIView alloc] initWithFrame:self.view.frame];
-        pattern.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
-        self.tableView.backgroundView = pattern;
-        [pattern release];
+        // texture
+        if (iOS6) {
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+        }
         
         // buttons
 		self.navigationItem.leftBarButtonItem = btnReset;
@@ -430,7 +429,6 @@
  * Customize the number of sections in the table view.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	// count it
     return [settings count];
 }
 
@@ -445,6 +443,24 @@
 	
 	// data count
     return [gdata.data count];
+}
+
+
+/*
+ * Header height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 45.0;
+}
+
+/*
+ * Footer height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == [settings count] - 1) {
+        return iPhone ? 30 : (iOS6 ? 15 : 0.00000000000000000001);
+    }
+    return 0.00000000000000000001;
 }
 
 

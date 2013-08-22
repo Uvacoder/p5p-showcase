@@ -53,6 +53,6 @@ enum {
 + (void)dispatch;
 + (void)trackPageView:(NSString*)page;
 + (void)trackEvent:(NSString*)category action:(NSString*)action label:(NSString*)label;
-
++ (void)trackEvent:(NSString*)category action:(NSString*)action;
 
 @end

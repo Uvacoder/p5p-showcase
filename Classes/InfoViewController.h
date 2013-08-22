@@ -21,42 +21,35 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import <UIKit/UIKit.h>
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
+#import "MailComposeController.h"
 #import "CellButton.h"
-#import "NoteView.h"
 
-//  Sections
+
+// Sections
 enum {
     SectionInfoApp,
-    SectionInfoRecommend,
-	SectionInfoFeedback
+    SectionInfoRecommend
 } P5PInfoSections;
 
 
-//  App Fields
+// App Fields
 enum {
 	AppPreferences,
 	AppCredits
 } P5PInfoSectionApp;
 
 
-//  Recommend Fields
+// Recommend Fields
 enum {
 	RecommendApp
 } P5PInfoSectionRecommend;
 
-//  Feedback Fields
-enum {
-	FeedbackSend
-} P5PInfoSectionFeedback;
 
-// actions
+// Actions
 enum {
-    InfoActionRecommend,
-	InfoActionFeedback
+    InfoActionRecommend
 } InfoActions;
 
 // alerts
@@ -80,9 +73,7 @@ enum {
 
 	// delegate
 	id<InfoDelegate> delegate;
-	
-	// note
-	NoteView *note;
+
 
 }
 
@@ -90,6 +81,7 @@ enum {
 @property (assign) id<InfoDelegate> delegate;
 
 // Action Methods
+- (void)actionRecommend:(id)sender;
 - (void)actionDone:(id)sender;
 
 @end

@@ -21,10 +21,9 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import <UIKit/UIKit.h>
-#import <MessageUI/MessageUI.h>
-#import <MessageUI/MFMailComposeViewController.h>
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
+#import "MailComposeController.h"
 #import "TapDetectingWindow.h"
 #import "P5PViewController.h"
 #import "HTMLView.h"

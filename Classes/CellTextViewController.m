@@ -21,7 +21,7 @@
 //  along with P5P.  If not, see www.gnu.org/licenses/.
 
 #import "CellTextViewController.h"
-
+#import "P5PConstants.h"
 
 /**
 * CellTextViewController.
@@ -34,70 +34,40 @@
 
 // accessors 
 @synthesize textField;
-
-
-#pragma mark -
-#pragma mark Object Methods
-
-/**
-* Init with frame.
-*/
-- (id)initWithFrame:(CGRect) frame {
-    DLog();
-    
-    // init
-	if ((self = [super init])) {
-	
-		// view
-        UIView *v = [[UIView alloc] initWithFrame:frame];
-		self.view = v;
-        [v release];
-        
-        // popover
-		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
-		
-        // remove background
-        self.view.backgroundColor = [UIColor clearColor];
-        self.view.opaque = YES;
-		
-		// ipad
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            
-            // background pattern
-            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
-        }
-
-		
-		// text field
-		UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(10,20,self.view.frame.size.width-20,40)];
-		tf.delegate = self;
-		tf.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		[tf setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-		[tf setBorderStyle:UITextBorderStyleRoundedRect];
-		[tf setReturnKeyType:UIReturnKeyDone];
-		[tf setClearButtonMode:UITextFieldViewModeWhileEditing];
-		[tf setOpaque:YES];
-		[tf setBackgroundColor:[UIColor whiteColor]];
-		
-		// add to view
-		self.textField = tf;
-		[self.view addSubview:textField];
-		[tf release];
-	}
-	return self;
-}
-
-
-#pragma mark -
-#pragma mark Properties
-
-// accessors
 @synthesize delegate;
 
 
 #pragma mark -
 #pragma mark View lifecycle
 
+
+/*
+ * Loads the view.
+ */
+- (void)loadView {
+    [super loadView];
+    
+    // remove background
+    self.view.backgroundColor = [UIColor clearColor];
+    self.view.opaque = YES;
+    
+    // texture
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+    
+    // text field
+    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectZero];
+    tf.delegate = self;
+    tf.frame = CGRectMake(10,20,self.view.frame.size.width-20,40);
+    [tf setReturnKeyType:UIReturnKeyDone];
+    [tf setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [tf setOpaque:YES];
+    [tf setBackgroundColor:[UIColor whiteColor]];
+    
+    // add to view
+    self.textField = tf;
+    [self.view addSubview:textField];
+    [tf release];
+}
 
 /*
 * Prepares the view.

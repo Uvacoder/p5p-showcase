@@ -35,7 +35,7 @@
 /*
  * Init.
  */
-- (id) initWithFrame:(CGRect) frame {
+- (id)initWithFrame:(CGRect)frame {
     
     // self
 	self = [super initWithFrame:frame];

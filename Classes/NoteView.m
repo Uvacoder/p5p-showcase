@@ -102,7 +102,7 @@
 		msgNote.backgroundColor = [UIColor clearColor];
 		
 		msgNote.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-		msgNote.textAlignment = UITextAlignmentCenter;
+		msgNote.textAlignment = NSTextAlignmentCenter;
 		msgNote.textColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
 		msgNote.numberOfLines = 2;
 
@@ -115,7 +115,7 @@
 		msgNotification.backgroundColor = [UIColor clearColor];
 		
 		msgNotification.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-		msgNotification.textAlignment = UITextAlignmentCenter;
+		msgNotification.textAlignment = NSTextAlignmentCenter;
 		msgNotification.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
 		msgNotification.numberOfLines = 6;
         

@@ -23,7 +23,6 @@
 #import "P5PViewController_iPad.h"
 #import "SketchesViewController_iPad.h"
 #import "SketchViewController_iPad.h"
-#import "CollectionsViewController_iPad.h"
 
 
 /**
@@ -53,11 +52,6 @@
         SketchViewController_iPad *skvc = [[SketchViewController_iPad alloc] init];
 		self.sketchViewController = skvc;
         [skvc release];
-		
-		// init collection
-        CollectionsViewController_iPad *cvc = [[CollectionsViewController_iPad alloc] init];
-		self.collectionsViewController = cvc;
-        [cvc release];
 		
 		// return of the jedi
 		return self;

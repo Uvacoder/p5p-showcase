@@ -22,6 +22,7 @@
 
 #import "CellPickerViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "P5PConstants.h"
 
 
 /**
@@ -69,8 +70,10 @@
         // ipad
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             
-            // background pattern
-            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+            // texture
+            if (iOS6) {
+                self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+            }
         }
 		// iphone
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
@@ -129,7 +132,8 @@
 									pickerSize.width,
 									pickerSize.height);
 		p.frame = pickerRect;
-		p.showsSelectionIndicator = YES;	// note this is default to NO
+		p.showsSelectionIndicator = YES;
+        p.backgroundColor = [UIColor whiteColor];
 	
 		// data source and delegate
 		p.delegate = self;
@@ -147,7 +151,7 @@
 		textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		textField.backgroundColor = [UIColor whiteColor];
-		textField.layer.cornerRadius = 10;
+		textField.layer.cornerRadius = 3;
 		
 		// add to view
 		[self.view addSubview:textField];

@@ -59,11 +59,10 @@ enum {
 // Business Methods
 - (void)loadData;
 - (NSMutableArray*)loadSketches;
-- (NSMutableArray*)loadCollections;
-- (void)disableCollection:(NSString*)cid disabled:(BOOL)flag;
 - (NSString *)applicationDocumentsDirectory;
 - (void)update:(NSString*)appVersion;
 - (void)install:(NSString*)appVersion;
+- (void)appearance;
 
 
 // Helpers

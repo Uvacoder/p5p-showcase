@@ -95,19 +95,17 @@
 	float sheight = self.view.frame.size.height;
 	
 	 // background 
-    UIImageView *background = [[UIImageView alloc] initWithFrame: self.view.bounds];
+    UIView *background = [[UIView alloc] initWithFrame: self.view.bounds];
     background.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    background.contentMode = UIViewContentModeCenter;
-	background.contentMode = UIViewContentModeRedraw;
-    background.image = [UIImage imageNamed: @"bg_sketches.png"];
+    background.backgroundColor = [UIColor colorWithRed:242/255.0 green:240/255.0 blue:235/255.0 alpha:1];
 	[self.view addSubview: background];
     [background release];
 	
 	// page control
-	ColorPageControl *pControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, sheight-50, swidth, 50)];
+	ColorPageControl *pControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, sheight-45, swidth, 45)];
 	pControl.backgroundColor = [UIColor clearColor];
 	pControl.inactivePageColor = [UIColor colorWithRed:180.0/255.0 green:180.0/255.0 blue:180.0/255.0 alpha:1.0];
-	pControl.activePageColor = [UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:120.0/255.0 alpha:1.0];
+	pControl.activePageColor = [UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0];
 	pControl.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	self.pageControl = pControl;
 	[self.view addSubview:pageControl];
@@ -137,16 +135,6 @@
 	[btnInfo addTarget:self action:@selector(actionInfo:) forControlEvents:UIControlEventTouchUpInside];
 	self.buttonInfo = btnInfo;
 	[self.view addSubview:buttonInfo];
-	
-	// button collections
-    /*
-	UIButton *btnCollections = [UIButton buttonWithType:UIButtonTypeCustom]; 
-	btnCollections.frame = CGRectMake(0, sheight-buttonSize, buttonSize, buttonSize);
-	[btnCollections setImage:[UIImage imageNamed:@"btn_collections.png"] forState:UIControlStateNormal];
-	[btnCollections addTarget:self action:@selector(actionCollections:) forControlEvents:UIControlEventTouchUpInside];
-	self.buttonCollections = btnCollections;
-	[self.view addSubview:buttonCollections];
-     */
 	
 	
 	// reload
@@ -302,9 +290,8 @@
  
 	// navigation controller
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:nfoController];
-	//navController.view.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:227.0/255.0 alpha:1.0];
-    navController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
     navController.navigationBar.barStyle = UIBarStyleBlack;
+    navController.navigationBar.translucent = NO;
  
 	// ipad
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -313,25 +300,12 @@
 
 	
 	// show the navigation controller modally
-	[navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-	[self presentModalViewController:navController animated:YES];
+	[navController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:navController animated:YES completion:nil];
  
-	// Clean up resources
+	// clean up resources
 	[navController release];
 	[nfoController release];
-}
-
-/*
-* Information.
-*/
-- (void)actionCollections:(id)sender {
-	DLog();
-	
-	// delegate
-	if (delegate != NULL && [delegate respondsToSelector:@selector(toggleCollections)]) {
-		[delegate toggleCollections];
-	}
-	
 }
 
 
@@ -347,7 +321,8 @@
 	FLog();
 	
 	// dismiss modal
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 
@@ -426,7 +401,6 @@
 	Sketch *sketch = [sketches objectAtIndex:itemIndex];
 	GLog(@"sketch = %@",sketch.name);
     cell.sketchTitle.text = [NSString stringWithFormat:@"%@", sketch.name];
-	cell.sketchMeta.text = [NSString stringWithFormat:@"%@", sketch.meta];
 	cell.sketchImage.image = [UIImage imageNamed: sketch.thumb];
     return cell;
 }

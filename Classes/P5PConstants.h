@@ -28,9 +28,7 @@
 #define udPreferenceRefreshTapEnabled           @"preference_refresh_tap_enabled"		
 #define udPreferenceEmail						@"preference_email"	
 #define udSketchSettings						@"sketch_settings"	
-#define udCollectionDisabled					@"collection_disabled"	
 #define udNoteApp                               @"note_app"	
-#define udNoteSketch                            @"note_sketch"	
 
 // Values
 #define vAppEmail                               @"p5p@cecinestpasparis.net"	
@@ -39,6 +37,6 @@
 #define vAppStoreLink                           @"itms-apps://itunes.apple.com/app/id443413228"
 
 // Flags
-#define iPad                                        (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-#define iPhone                                      (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-#define iOS4    ([[[UIDevice currentDevice] systemVersion] compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending)
+#define iPad                                    (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+#define iPhone                                  (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+#define iOS6                                    ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending)

@@ -40,10 +40,11 @@
 	
 	 // title
 	self.navigationItem.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Credits",@"Credits")];
+    
+    // texture
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
 	
-	// remove background for iPhone
-	self.tableView.backgroundColor = [UIColor clearColor];
-	self.tableView.opaque = YES;
+	// table
 	self.tableView.backgroundView = nil;
 	
 	// init references
@@ -138,6 +139,27 @@
     }
     
     return 0;
+}
+
+/*
+ * Header height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 45.0;
+}
+
+/*
+ * Footer height.
+ */
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    switch (section) {
+        case SectionCreditsAssets:
+            return 30;
+            break;
+        default:
+            return 0.00000000000000000001;
+            break;
+    }
 }
 
 

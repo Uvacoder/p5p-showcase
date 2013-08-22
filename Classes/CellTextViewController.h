@@ -52,7 +52,5 @@
 @property (assign) id<CellTextViewDelegate> delegate;
 @property (nonatomic, assign) UITextField *textField;
 
-// Object Methods
-- (id)initWithFrame:(CGRect)frame;
 
 @end

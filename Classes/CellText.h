@@ -60,6 +60,6 @@
 @property (nonatomic, retain) NSString *placeholder;
 
 // Business Methods
-- (CellTextViewController*)textViewController:(CGRect)pframe;
+- (CellTextViewController*)textViewController;
 
 @end

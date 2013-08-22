@@ -34,8 +34,9 @@
 @interface InfoViewController (Helpers)
 - (void)recommendEmail;
 - (void)recommendTwitter;
+- (void)recommendFacebook;
+- (void)recommendWeibo;
 - (void)recommendAppStore;
-- (void)feedbackEmail;
 @end
 
 /**
@@ -67,71 +68,55 @@
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 		self.navigationItem.title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"P5P",@"P5P")];
 	}
+    
+    // texture
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
 	
-	// navigation bar: done button
-	UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] 
-								   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-								   target:self 
-								   action:@selector(actionDone:)];
+	// table
+	self.tableView.scrollEnabled = NO;
+	self.tableView.backgroundView = nil;
+    
+    // done button
+	UIBarButtonItem *btnDone = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                target:self
+                                action:@selector(actionDone:)];
 	self.navigationItem.rightBarButtonItem = btnDone;
 	[btnDone release];
 	
-	// prepare table view
-	self.tableView.scrollEnabled = NO;
-	
-	// remove background for iPhone
-	self.tableView.backgroundColor = [UIColor clearColor];
-	self.tableView.opaque = YES;
-	self.tableView.backgroundView = nil;
-	
-	// about 
-	float height = 110;
+	// about
+    float inset = iOS6 ? 30 : 15;
+    float margin = 10;
+	float height = 100;
     float width = 540;
-	float inset = 40;
-    float margin = 15;
 	if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 		height = 150;
         width = 320;
-		inset = 20;
-        margin = 10;
 	}
-	UIView *aboutView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
 
 	
-	// description
-	UILabel *lblAbout = [[UILabel alloc] initWithFrame:CGRectMake(inset, margin, width-2*inset, height-margin)];
+	// view
+    UIView *about = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    
+	UILabel *lblAbout = [[UILabel alloc] initWithFrame:CGRectMake(inset, margin, width-2*inset, height-2*margin)];
 	lblAbout.backgroundColor = [UIColor clearColor];
 	lblAbout.font = [UIFont fontWithName:@"Helvetica" size:15.0];
 	lblAbout.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
 	lblAbout.shadowColor = [UIColor whiteColor];
-	lblAbout.shadowOffset = CGSizeMake(1,1);
+	lblAbout.shadowOffset = CGSizeMake(0,1);
 	lblAbout.opaque = YES;
 	lblAbout.numberOfLines = 4;
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 		lblAbout.numberOfLines = 7;
 	}
 	[lblAbout setText:NSLocalizedString(@"P5P is a collection of generative sketches. The interactive visuals are each defined by a set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images.",@"P5P is a collection of generative sketches. The interactive visuals are each defined by a set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images.")];
-	[aboutView addSubview:lblAbout];
-	[lblAbout release];
+    [about addSubview:lblAbout];
+    [lblAbout release];
 
 	// table header
-	self.tableView.tableHeaderView = aboutView;
-    [aboutView release];
+	self.tableView.tableHeaderView = about;
+    [about release];
 	
-	
-	// note view
-	NoteView *nv = [[NoteView alloc] initWithFrame:self.view.frame];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		// strange days
-		nv.bounds = CGRectMake(-200, -200, self.view.frame.size.width, self.view.frame.size.height);
-	}
-	[nv setAutoresizingMask: (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight) ];
-	
-	// set and add to view 
-	note = [nv retain];
-	[self.view addSubview:note];
-	[self.view bringSubviewToFront:note];
-	[nv release];
 
 }
 
@@ -177,36 +162,11 @@
 		
 		// recommend
 		case InfoActionRecommend:{
-		
-			// track
-			[Tracker trackEvent:TEventInfo action:@"Recommend" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
-	
-			// action sheet
-			UIActionSheet *recommendAction = [[UIActionSheet alloc]
-								  initWithTitle:NSLocalizedString(@"Recommend P5P",@"Recommend P5P")
-								  delegate:self
-								  cancelButtonTitle:NSLocalizedString(@"Cancel",@"Cancel")
-								  destructiveButtonTitle:nil
-								  otherButtonTitles:NSLocalizedString(@"Email",@"Email"),NSLocalizedString(@"Twitter",@"Twitter"),NSLocalizedString(@"App Store",@"App Store"),nil];
-	
-			// show
-			[recommendAction setTag:InfoActionRecommend];
-			[recommendAction showInView:self.navigationController.view];
-			[recommendAction release];
+			[self actionRecommend:c];
 			break;
 		}
 		
-		// feedback
-		case InfoActionFeedback:{
-		
-			// track
-			[Tracker trackEvent:TEventInfo action:@"Feedback" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
-			
-			// feedback
-            [self feedbackEmail];
-			break;
-		}
-		
+        // default
 		default:
 			break;
 	}
@@ -217,47 +177,53 @@
 
 
 #pragma mark -
-#pragma mark UIActionSheet Delegate
+#pragma mark Helpers
+
 
 /*
- * Action selected.
+ * Action recommend.
  */
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	DLog();
-	
-	// tag
-	switch ([actionSheet tag]) {
-	
-		// recommend
-		case InfoActionRecommend: {
-			// email
-			if (buttonIndex == 0) {
-				[self recommendEmail];
-			} 
-			// email
-			if (buttonIndex == 1) {
-				[self recommendTwitter];
-			} 
-			// app store
-			if (buttonIndex == 2) {
-				[self recommendAppStore];
-			} 
-			break;
-		}
-		
-		
-		// default
-		default: {
-			break;
-		}
-	}
-	
-	
+- (void)actionRecommend:(id)sender {
+    FLog();
+    
+    // track
+    [Tracker trackEvent:TEventInfo action:@"Recommend"];
+    
+    // services
+    BOOL email = [MailComposeController canSendMail];
+    BOOL twitter = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
+    BOOL facebook = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
+    BOOL weibo = [SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo];
+    
+    // recommend
+    UIActionSheet *recommendAction = [[UIActionSheet alloc] init];
+    [recommendAction setDelegate:self];
+    [recommendAction setTag:InfoActionRecommend];
+    [recommendAction setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [recommendAction setTitle:NSLocalizedString(@"Recommend P5P",@"Recommend P5P")];
+    
+    // services
+    if (email) {
+        [recommendAction addButtonWithTitle:NSLocalizedString(@"Email",@"Email")];
+    }
+    if (twitter) {
+        [recommendAction addButtonWithTitle:NSLocalizedString(@"Twitter",@"Twitter")];
+    }
+    if (facebook) {
+        [recommendAction addButtonWithTitle:NSLocalizedString(@"Facebook",@"Facebook")];
+    }
+    if (weibo) {
+        [recommendAction addButtonWithTitle:NSLocalizedString(@"Sina Weibo",@"Sina Weibo")];
+    }
+    [recommendAction addButtonWithTitle:NSLocalizedString(@"App Store",@"App Store")];
+    [recommendAction addButtonWithTitle:NSLocalizedString(@"Cancel",@"Cancel")];
+    [recommendAction setCancelButtonIndex:recommendAction.numberOfButtons-1];
+    
+    // show
+    [recommendAction showInView:self.navigationController.view];
+    [recommendAction release];
+
 }
-
-
-#pragma mark -
-#pragma mark Helpers
 
 
 /*
@@ -267,21 +233,13 @@
 	DLog();
 	
 	// track
-	[Tracker trackEvent:TEventRecommend action:@"Email" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
+	[Tracker trackEvent:TEventRecommend action:@"Email"];
 	
 	// check mail support
-	if (! [MFMailComposeViewController canSendMail]) {
+	if ([MailComposeController canSendMail]) {
 
-		// note
-		[note noteError:@"Email not configured." ];
-		[note showNote];
-		[note dismissNoteAfterDelay:2.4];
-
-	}
-	else {
-		
 		// mail composer
-		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+		MailComposeController *composer = [[MailComposeController alloc] init];
 		composer.mailComposeDelegate = self;
         composer.navigationBar.barStyle = UIBarStyleBlack;
         
@@ -293,7 +251,7 @@
 		
 		// subject
 		[composer setSubject:[NSString stringWithFormat:@"P5P iPad/iPhone App"]];
-	 
+        
 		// message
         NSString *message = [NSString stringWithFormat:@"%@\n%@",NSLocalizedString(@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches.",@"P5P is a collection of generative sketches. The interactive visuals are each defined by a flexible set of rules and computed by randomly modified algorithms. Adjust and tweak their parameters, touch or move the device to influence the outcome of the generated images. Save, print, email or publish screenshots.\n\n\n---\nP5P\nA Collection of Generative Sketches."),vAppStoreURL];
 		[composer setMessageBody:message isHTML:NO];
@@ -302,15 +260,16 @@
 		UIImage *pimg = [delegate randomSketchImage];
 		NSData *data = UIImagePNGRepresentation(pimg);
 		[composer addAttachmentData:data mimeType:@"image/png" fileName:@"P5P"];
-
-	 
+        
+        
 		// show off
-		[self presentModalViewController:composer animated:YES];
-	 
+        [self presentViewController:composer animated:YES completion:nil];
+        
 		// release
 		[composer release];
-		
+
 	}
+
 }
 
 /*
@@ -320,54 +279,140 @@
 	DLog();
 	
 	// track
-	[Tracker trackEvent:TEventRecommend action:@"Twitter" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
-    
-    
+	[Tracker trackEvent:TEventRecommend action:@"Twitter"];
     
     // check twitter support
-    if(NSClassFromString(@"TWTweetComposeViewController") != nil) {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         
-        // twitter composition view controller
-        TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
+        // composition view controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        // initial tweet text
-        [tweetViewController setInitialText:NSLocalizedString(@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net",@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net")];
+        // initial text
+        [composeViewController setInitialText:NSLocalizedString(@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net",@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net")];
         
-        // promo image
+        // image
         UIImage *pimg = [delegate randomSketchImage];
-        [tweetViewController addImage:pimg];
+        [composeViewController addImage:pimg];
+        
         
         // completion handler
-        [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
             
+            // dismiss the composition view controller
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            // result
             switch (result) {
-                case TWTweetComposeViewControllerResultCancelled:
-                    FLog("Twitter: cancel");
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
                     break;
-                case TWTweetComposeViewControllerResultDone:
-                    FLog("Twitter: done");
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
                     break;
                 default:
                     break;
             }
             
-            // dismiss the tweet composition view controller
-            [self dismissModalViewControllerAnimated:YES];
         }];
         
         // modal
-        [self presentModalViewController:tweetViewController animated:YES];
-        [tweetViewController release];
+        [self presentViewController:composeViewController animated:YES completion:nil];
     }
-    else {
-        
-        // note
-		[note noteError:@"Twitter not supported." ];
-		[note showNote];
-		[note dismissNoteAfterDelay:2.4];
-    }
-	
+    
 }
+
+
+/*
+ * Recommend Facebook.
+ */
+- (void)recommendFacebook {
+	FLog();
+    
+    // track
+	[Tracker trackEvent:TEventRecommend action:@"Facebook"];
+	
+	// check facebook support
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        
+        // composition view controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        // initial text
+        [composeViewController setInitialText:NSLocalizedString(@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net",@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net")];
+        
+        // image
+        UIImage *pimg = [delegate randomSketchImage];
+        [composeViewController addImage:pimg];
+        
+        // completion handler
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            // result
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
+                    break;
+                default:
+                    break;
+            }
+        }];
+        
+        // modal
+        [self presentViewController:composeViewController animated:YES completion:nil];
+    }
+}
+
+/*
+ * Recommend Weibo.
+ */
+- (void)recommendWeibo {
+	FLog();
+    
+    // track
+	[Tracker trackEvent:TEventRecommend action:@"Weibo"];
+	
+	// check twitter support
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
+        
+        // composition view controller
+        SLComposeViewController *composeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+        
+        // initial text
+        [composeViewController setInitialText:NSLocalizedString(@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net",@"P5P iPad/iPhone App. A Collection of Generative Sketches. http://p5p.cecinestpasparis.net")];
+        
+        // image
+        UIImage *pimg = [delegate randomSketchImage];
+        [composeViewController addImage:pimg];
+        
+        
+        // completion handler
+        [composeViewController setCompletionHandler:^(SLComposeViewControllerResult result) {
+            
+            // dismiss the composition view controller
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            // result
+            switch (result) {
+                case SLComposeViewControllerResultCancelled:
+                    FLog("SLCompose: cancel");
+                    break;
+                case SLComposeViewControllerResultDone:
+                    FLog("SLCompose: done");
+                    break;
+                default:
+                    break;
+            }
+            
+        }];
+        
+        // modal
+        [self presentViewController:composeViewController animated:YES completion:nil];
+    }
+}
+
 
 /*
 * Recommend App Store.
@@ -376,7 +421,7 @@
 	DLog();
 	
 	// track
-	[Tracker trackEvent:TEventRecommend action:@"AppStore" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
+	[Tracker trackEvent:TEventRecommend action:@"AppStore"];
 	
 	// show info
 	UIAlertView *alert = [[UIAlertView alloc]
@@ -392,50 +437,53 @@
 }
 
 
+#pragma mark -
+#pragma mark UIActionSheet Delegate
+
 /*
-* Feedback Email.
-*/
-- (void)feedbackEmail {
+ * Action selected.
+ */
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	DLog();
 	
-	// track
-	[Tracker trackEvent:TEventFeedback action:@"Email" label:[NSString stringWithFormat:@"%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
+	// tag
+	switch ([actionSheet tag]) {
+            
+        // recommend
+		case InfoActionRecommend: {
+            
+			// action
+            if (buttonIndex != actionSheet.cancelButtonIndex) {
+                
+                // service
+                NSString *service = [actionSheet buttonTitleAtIndex:buttonIndex];
+                if ([service isEqualToString:@"Email"] || [service isEqualToString:@"E-Mail"] || [service isEqualToString:@"E-mail"]) {
+                    [self recommendEmail];
+                }
+                else if ([service isEqualToString:@"Twitter"]) {
+                    [self recommendTwitter];
+                }
+                else if ([service isEqualToString:@"Facebook"]) {
+                    [self recommendFacebook];
+                }
+                else if ([service isEqualToString:@"Sina Weibo"]) {
+                    [self recommendWeibo];
+                }
+                else if ([service isEqualToString:@"App Store"]) {
+                    [self recommendAppStore];
+                }
+            }
+			break;
+		}
+            
+            
+            // default
+		default: {
+			break;
+		}
+	}
 	
-	// check mail support
-	if (! [MFMailComposeViewController canSendMail]) {
-
-		// note
-		[note noteError:@"Email not configured." ];
-		[note showNote];
-		[note dismissNoteAfterDelay:2.4];
-
-	}
-	else {
-		
-		// mail composer
-		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
-		composer.mailComposeDelegate = self;
-        composer.navigationBar.barStyle = UIBarStyleBlack;
-        
-        // ipad
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            composer.modalPresentationStyle = UIModalPresentationCurrentContext;
-            composer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        }
-		
-		// subject
-		[composer setToRecipients:[[[NSArray alloc] initWithObjects:vAppEmail,nil] autorelease]];
-		
-		// subject        
-        [composer setSubject:[NSString stringWithFormat:@"[P5P] Feedback v%@",[(P5PAppDelegate*)[[UIApplication sharedApplication] delegate] getUserDefault:udInformationAppVersion]]];
-	 
-		// show off
-		[self presentModalViewController:composer animated:YES];
-	 
-		// release
-		[composer release];
-		
-	}
+	
 }
 
 
@@ -454,42 +502,19 @@
 	
 		// recommend App Store
 		case InfoAlertRecommendAppStore: {
-			// cancel
-			if (buttonIndex == 0) {
-			}
-			// visit app store
-			else {
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:vAppStoreLink]];
+            
+			// store
+			if (buttonIndex != actionSheet.cancelButtonIndex) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:vAppStoreLink]];
 			}
 			break;
 		}
-
 		
 		// default
 		default: {
 			break;
 		}
 	}
-	
-}
-
-
-
-#pragma mark -
-#pragma mark TwitterComposeDelegate Protocol
-
-/*
- * Dismisses the twitter composition interface when users tap Cancel or Send.
- */
-- (void)dismissTwitterCompose {
-	DLog();
-	
-	// hide that thing	
-	[UIView beginAnimations:@"twitter_dismiss" context:nil];
-	[UIView setAnimationDuration:0.6];
-	[self.navigationController popViewControllerAnimated:NO];
-	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO]; 
-	[UIView commitAnimations];
 	
 }
 
@@ -524,7 +549,7 @@
 	}
 	
 	// close modal
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 
 }
 
@@ -536,7 +561,6 @@
  * Customize the number of sections in the table view.
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	// count it
     return 3;
 }
 
@@ -553,9 +577,6 @@
 		}
 		case SectionInfoApp: {
 			return 2;
-		}
-		case SectionInfoFeedback: {
-			return 1;
 		}
     }
     
@@ -647,32 +668,7 @@
 			break; 
 		}
 		
-		// feedback
-		case SectionInfoFeedback: {
-			
-			// reset user defaults
-            if ([indexPath row] == FeedbackSend) {
-				
-				// create cell
-				CellButton *cbutton = (CellButton*) [tableView dequeueReusableCellWithIdentifier:CellInfoButtonIdentifier];
-				if (cbutton == nil) {
-					cbutton = [[[CellButton alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellInfoButtonIdentifier] autorelease];
-				}				
-				
-				// prepare cell
-				cbutton.delegate = self;
-				cbutton.tag = InfoActionFeedback;
-				[cbutton.buttonAccessory setTitle:NSLocalizedString(@"Send Feedback",@"Send Feedback") forState:UIControlStateNormal];
-				[cbutton update:YES];
-				
-				// set cell
-				cell = cbutton;
 
-			}
-			
-			// break it
-			break; 
-		}
 	}
 	
 	

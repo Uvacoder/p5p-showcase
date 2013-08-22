@@ -37,7 +37,6 @@
 // accessors
 @synthesize sketchImage;
 @synthesize sketchTitle;
-@synthesize sketchMeta;
 
 
 #pragma mark -
@@ -65,9 +64,9 @@
 		imgSketchImage.clipsToBounds = NO;
 		imgSketchImage.layer.shadowPath = path.CGPath;
 		imgSketchImage.layer.shadowColor = [UIColor blackColor].CGColor;
-		imgSketchImage.layer.shadowRadius = 3.0;
-		imgSketchImage.layer.shadowOpacity = 0.2;
-		imgSketchImage.layer.shadowOffset = CGSizeMake(2,2);
+		imgSketchImage.layer.shadowRadius = 2.0;
+		imgSketchImage.layer.shadowOpacity = 0.1;
+		imgSketchImage.layer.shadowOffset = CGSizeMake(0,0);
 		self.sketchImage = imgSketchImage;
 		[self.contentView addSubview: sketchImage];
 		[imgSketchImage release];
@@ -76,31 +75,14 @@
 		float lblWidth = frame.size.width;
 		float lblHeight = 30;
 		
-		// sketch meta
-		UILabel *lblSketchMeta = [[UILabel alloc] initWithFrame:CGRectMake(0.0, imgHeight, lblWidth, lblHeight)];
-		lblSketchMeta.backgroundColor = [UIColor clearColor];
-		lblSketchMeta.font = [UIFont fontWithName:@"Helvetica" size:12.0]; 
-		lblSketchMeta.textColor = [UIColor colorWithRed:180.0/255.0 green:180.0/255.0 blue:180.0/255.0 alpha:1.0];
-		lblSketchMeta.shadowColor = [UIColor whiteColor];
-		lblSketchMeta.shadowOffset = CGSizeMake(1,1);
-		lblSketchMeta.textAlignment = UITextAlignmentRight;
-		lblSketchMeta.opaque = YES;
-		lblSketchMeta.text = @"meta";
-		self.sketchMeta = lblSketchMeta;
-        /*
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			[self.contentView addSubview: sketchMeta];
-		}
-         */
-		[lblSketchMeta release];
-		
 		// sketch title
 		UILabel *lblSketchTitle = [[UILabel alloc] initWithFrame:CGRectMake(0.0, imgHeight, lblWidth, lblHeight)];
 		lblSketchTitle.backgroundColor = [UIColor clearColor];
 		lblSketchTitle.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-		lblSketchTitle.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
+		lblSketchTitle.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
 		lblSketchTitle.shadowColor = [UIColor whiteColor];
-		lblSketchTitle.shadowOffset = CGSizeMake(1,1);
+		lblSketchTitle.shadowOffset = CGSizeMake(0,-1);
+        lblSketchTitle.textAlignment = NSTextAlignmentCenter;
 		lblSketchTitle.opaque = YES;
 		if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
 			lblSketchTitle.font = [UIFont fontWithName:@"Helvetica" size:14.0];
@@ -136,16 +118,12 @@
 - (void) setHighlighted:(BOOL)value animated:(BOOL)animated {
 	GLog(@"%@",value ? @"yes":@"no");
 	if (value) {
-		self.contentView.frame = CGRectOffset(self.contentView.frame, 1, 1);
 		sketchImage.layer.shadowColor = [UIColor clearColor].CGColor;
 		sketchTitle.shadowColor = [UIColor clearColor];
-		sketchMeta.shadowColor = [UIColor clearColor];
 	}
 	else {
-		self.contentView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
 		sketchImage.layer.shadowColor = [UIColor blackColor].CGColor;
 		sketchTitle.shadowColor = [UIColor whiteColor];
-		sketchMeta.shadowColor = [UIColor whiteColor];
 	}
 
 }
@@ -164,7 +142,6 @@
 	self.contentView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
 	sketchImage.layer.shadowColor = [UIColor blackColor].CGColor;
 	sketchTitle.shadowColor = [UIColor whiteColor];
-	sketchMeta.shadowColor = [UIColor whiteColor];
 }
 
 /*
@@ -186,7 +163,6 @@
  */
 - (void) dealloc {
     [sketchTitle release];
-	[sketchMeta release];
 	[sketchImage release];
     [super dealloc];
 }

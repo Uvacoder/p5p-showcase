@@ -39,24 +39,6 @@
 #pragma mark -
 #pragma mark TableCell Methods
 
-/*
- * Init cell.
- */
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier {
-	GLog();
-	
-	// init cell
-    if ((self = [super initWithStyle:style reuseIdentifier:identifier])) {
-        
-        // accessory
-        UIImageView *aimg = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"icon_link_external.png"]];
-        self.accessoryView = aimg;
-        [aimg release];
-    }
-
-    // yo mamma
-    return self;
-}
 
 /*
  * Don't touch this.

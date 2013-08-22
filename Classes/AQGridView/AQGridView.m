@@ -1273,8 +1273,8 @@ NSString * const AQGridViewSelectionDidChangeNotification = @"AQGridViewSelectio
 		switch ( [recognizer state] )
 		{
 			case UIGestureRecognizerStateEnded:
-			case UIGestureRecognizerStateCancelled:
-			case UIGestureRecognizerStateFailed:
+			//case UIGestureRecognizerStateCancelled:
+			//case UIGestureRecognizerStateFailed:
 				continue;
 				
 			default:

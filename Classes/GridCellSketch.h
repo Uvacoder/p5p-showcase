@@ -32,12 +32,10 @@
 	// label
 	UIImageView *sketchImage;
 	UILabel *sketchTitle;
-	UILabel *sketchMeta;
 }
 
 // Properties
 @property (nonatomic, retain) UIImageView *sketchImage;
 @property (nonatomic, retain) UILabel *sketchTitle;
-@property (nonatomic, retain) UILabel *sketchMeta;
 
 @end

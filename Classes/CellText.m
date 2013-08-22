@@ -71,20 +71,19 @@
 #pragma mark -
 #pragma mark Business Methods
 
-
-
 /**
 * Creates a CellTextViewController.
 */
-- (CellTextViewController*)textViewController:(CGRect)pframe {
+- (CellTextViewController*)textViewController {
 	FLog();
 	
 	// controller
-	CellTextViewController *textController = [[CellTextViewController alloc] initWithFrame:pframe];
+	CellTextViewController *textController = [[CellTextViewController alloc] init];
 	textController.delegate = self;
 	return textController;
 	
 }
+
 
 #pragma mark -
 #pragma mark Business
