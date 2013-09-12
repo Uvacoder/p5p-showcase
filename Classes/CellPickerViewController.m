@@ -60,21 +60,14 @@
         // popover
 		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
         
-        // remove background
-        self.view.backgroundColor = [UIColor clearColor];
-        self.view.opaque = YES;
+        // texture
+        if (iPhone || iOS6) {
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+        }
 		
         // device
         BOOL iphone_4in = NO;
         
-        // ipad
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            
-            // texture
-            if (iOS6) {
-                self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
-            }
-        }
 		// iphone
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
             

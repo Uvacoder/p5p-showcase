@@ -70,19 +70,19 @@
 										style:UIBarButtonItemStyleBordered 
 										target:self 
 										action:@selector(actionApply:)];
-	
+    
+    
     // remove background
-    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.opaque = YES;
     self.tableView.backgroundView = nil;
+    
+    // texture
+    if (iPhone || iOS6) {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+    }
 	
 	// iPad
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
-        // texture
-        if (iOS6) {
-            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
-        }
         
         // buttons
 		self.navigationItem.leftBarButtonItem = btnReset;

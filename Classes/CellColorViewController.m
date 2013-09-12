@@ -80,11 +80,11 @@
         
         // popover
 		self.contentSizeForViewInPopover = CGSizeMake(frame.size.width, frame.size.height);
-		self.view.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:227.0/255.0 alpha:1.0];
 		
-		// remove background 
-        self.view.backgroundColor = [UIColor clearColor];
-        self.view.opaque = YES;
+        // texture
+        if (iPhone || iOS6) {
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
+        }
 
         
         // values
