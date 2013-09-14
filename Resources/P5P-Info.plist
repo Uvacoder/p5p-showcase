@@ -34,11 +34,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0.3</string>
+	<string>1.1.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.0.3</string>
+	<string>1.1.0.4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>
@@ -57,7 +57,7 @@
 			<key>UILaunchImageOrientation</key>
 			<string>Landscape</string>
 			<key>UILaunchImageSize</key>
-			<string>{748, 1024}</string>
+			<string>{768, 1024}</string>
 		</dict>
 		<dict>
 			<key>UILaunchImageMinimumOSVersion</key>
@@ -67,15 +67,13 @@
 			<key>UILaunchImageOrientation</key>
 			<string>Portrait</string>
 			<key>UILaunchImageSize</key>
-			<string>{768, 1004}</string>
+			<string>{768, 1024}</string>
 		</dict>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -84,5 +82,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
