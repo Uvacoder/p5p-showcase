@@ -28,4 +28,5 @@
  */
 @interface Utils : NSObject
 + (BOOL)isRetina;
++ (BOOL)is4inch;
 @end

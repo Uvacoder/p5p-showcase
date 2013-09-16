@@ -38,6 +38,7 @@
 */
 @interface SketchViewController (Helpers)
 - (void)exportSave:(id)sender;
+- (void)exportWallpaper:(id)sender;
 - (void)exportEmail:(id)sender;
 - (void)exportTwitter:(id)sender;
 - (void)exportFacebook:(id)sender;
@@ -600,9 +601,12 @@ static BOOL toolbarHidden = NO;
 	
 	// export options
 	NSMutableArray *exportOptions = [[NSMutableArray alloc] init];
-	[exportOptions addObject:NSLocalizedString(@"Save as Image",@"Save as Image")];
+	[exportOptions addObject:NSLocalizedString(@"Save Image",@"Save Image")];
+    if (! iOS6) {
+        [exportOptions addObject:NSLocalizedString(@"Export Wallpaper",@"Export Wallpaper")];
+    }
     if (email) {
-        [exportOptions addObject:NSLocalizedString(@"Email Sketch",@"Email Sketch")];
+        [exportOptions addObject:NSLocalizedString(@"Email Image",@"Email Image")];
     }
     if (twitter) {
         [exportOptions addObject:NSLocalizedString(@"Publish on Twitter",@"Publish on Twitter")];
@@ -661,7 +665,7 @@ static BOOL toolbarHidden = NO;
 #pragma mark Export Actions
 
 /*
-* Save.
+* Save / Wallpaper.
 */
 - (void)exportSave:(id)sender {
 	DLog();
@@ -669,9 +673,8 @@ static BOOL toolbarHidden = NO;
 	// track
 	[Tracker trackEvent:TEventExport action:@"Save" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
 	
-	
 	// note
-	[note noteActivity:@"Capture Screenshot..."];
+	[note noteActivity:@"Save Image..."];
 	[note showNote];
 	
 	// screenshot
@@ -680,6 +683,49 @@ static BOOL toolbarHidden = NO;
 	// save image
 	UIImageWriteToSavedPhotosAlbum(screenshot, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
+- (void)exportWallpaper:(id)sender {
+	DLog();
+    
+    // track
+	[Tracker trackEvent:TEventExport action:@"Wallpaper" label:[NSString stringWithFormat:@"/%@/%@",sketch.collection.cid,sketch.sid]];
+	
+	// note
+	[note noteActivity:@"Export Wallpaper..."];
+	[note showNote];
+    
+    // device
+    BOOL  retina = [Utils isRetina];
+    float factor = iPad ? 1.5375 : ([Utils is4inch] ? 1.23 : 1.2475);
+    
+    // screenshot
+	UIImage *screenshot = [htmlView screenshot:[Utils isRetina]];
+    
+    // resized
+    int screenshot_width = screenshot.size.width;
+    int screenshot_height = screenshot.size.height;
+    int wallpaper_width = screenshot_width*factor;
+    int wallpaper_height = screenshot_height*factor;
+    int screenshot_x = (wallpaper_width-screenshot_width) / 2.0;
+    int screenshot_y = (wallpaper_height-screenshot_height) / 2.0;
+    
+    // wallpaper
+    if (retina) {
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(wallpaper_width, wallpaper_height), NO, 2.0f);
+    } else {
+        UIGraphicsBeginImageContext(CGSizeMake(wallpaper_width, wallpaper_height));
+    }
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    UIGraphicsPushContext(context);
+    CGContextSetFillColorWithColor(context, [UIColor colorWithRed:255/255.0 green:253/255.0 blue:245/255.0 alpha:1].CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, wallpaper_width, wallpaper_height));
+	[screenshot drawInRect:CGRectMake(screenshot_x, screenshot_y, screenshot_width, screenshot_height)];
+    UIGraphicsPopContext();
+    UIImage *wallpaper = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+	
+	// save
+	UIImageWriteToSavedPhotosAlbum(wallpaper, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
 	GLog();
  
@@ -687,7 +733,7 @@ static BOOL toolbarHidden = NO;
 	if (error) {
 		UIAlertView *alert;
 		alert = [[UIAlertView alloc] initWithTitle:@"Error" 
-                            message:@"Unable to save image to Photo Album." 
+                            message:@"Unable to save image to Photos."
                             delegate:self cancelButtonTitle:@"Ok" 
                             otherButtonTitles:nil];
 		[alert setTag:P5PSketchCaptureError];
@@ -696,7 +742,7 @@ static BOOL toolbarHidden = NO;
 	}
 	// all is well
 	else {
-		[note noteSuccess:@"Image saved to Photo Album."];
+		[note noteSuccess:@"Saved to Photos."];
 	}
 	
 	// dismiss
@@ -1094,6 +1140,9 @@ static BOOL toolbarHidden = NO;
         NSString *service = [actionSheet buttonTitleAtIndex:buttonIndex];
         if ([service rangeOfString:@"Save"].location != NSNotFound) {
             [self exportSave:exportButton];
+        }
+        if ([service rangeOfString:@"Wallpaper"].location != NSNotFound) {
+            [self exportWallpaper:exportButton];
         }
         if ([service rangeOfString:@"Email"].location != NSNotFound) {
             [self exportEmail:exportButton];

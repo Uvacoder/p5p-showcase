@@ -51,4 +51,17 @@
     return scale > 1.0;
 }
 
+/**
+ * Detect 4inch display.
+ */
++ (BOOL)is4inch {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        if (screen.size.height == 568) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end
