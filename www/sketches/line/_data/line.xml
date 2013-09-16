@@ -34,7 +34,7 @@
 			<SettingGroup gid="direction" name="Directions" sort="3">
 				<Setting key="direction_up" label="Up" value="NO" type="switch" options="" live="NO" sort="1"/>
 				<Setting key="direction_upright" label="Up Right" value="YES" type="switch" options="" live="NO" sort="2"/>
-				<Setting key="direction_right" label="Rigth" value="NO" type="switch" options="" live="NO" sort="3"/>
+				<Setting key="direction_right" label="Right" value="NO" type="switch" options="" live="NO" sort="3"/>
 				<Setting key="direction_downright" label="Down Right" value="YES" type="switch" options="" live="NO" sort="4"/>
 				<Setting key="direction_down" label="Down" value="NO" type="switch" options="" live="NO" sort="5"/>
 				<Setting key="direction_downleft" label="Down Left" value="YES" type="switch" options="" live="NO" sort="6"/>
@@ -147,7 +147,7 @@
 			<SettingGroup gid="direction" name="Directions" sort="3">
 				<Setting key="direction_up" label="Up" value="YES" type="switch" options="" live="NO" sort="1"/>
 				<Setting key="direction_upright" label="Up Right" value="NO" type="switch" options="" live="NO" sort="2"/>
-				<Setting key="direction_right" label="Rigth" value="YES" type="switch" options="" live="NO" sort="3"/>
+				<Setting key="direction_right" label="Right" value="YES" type="switch" options="" live="NO" sort="3"/>
 				<Setting key="direction_downright" label="Down Right" value="NO" type="switch" options="" live="NO" sort="4"/>
 				<Setting key="direction_down" label="Down" value="YES" type="switch" options="" live="NO" sort="5"/>
 				<Setting key="direction_downleft" label="Down Left" value="NO" type="switch" options="" live="NO" sort="6"/>

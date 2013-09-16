@@ -36,6 +36,20 @@
 
 
 #pragma mark -
+#pragma mark Object
+
+/*
+ * Init.
+ */
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
+
+#pragma mark -
 #pragma mark Business
 
 /**

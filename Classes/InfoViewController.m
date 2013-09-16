@@ -74,7 +74,7 @@
 	
 	// table
 	self.tableView.scrollEnabled = NO;
-	self.tableView.backgroundView = nil;
+    self.tableView.backgroundView = nil;
     
     // done button
 	UIBarButtonItem *btnDone = [[UIBarButtonItem alloc]
@@ -85,7 +85,7 @@
 	[btnDone release];
 	
 	// about
-    float inset = iOS6 ? 30 : 15;
+    float inset = iOS6 ? (iPad ? 30 : 15) : 15;
     float margin = 10;
 	float height = 100;
     float width = 540;
@@ -608,7 +608,7 @@
 	// configure
 	cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0]; 
 	cell.textLabel.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
-	
+    cell.backgroundColor = [UIColor whiteColor];
 	
 	// section
     NSUInteger section = [indexPath section];

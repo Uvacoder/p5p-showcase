@@ -28,6 +28,7 @@
 */
 @implementation CreditsViewController
 
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -43,9 +44,7 @@
     
     // texture
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_texture.png"]];
-	
-	// table
-	self.tableView.backgroundView = nil;
+    self.tableView.backgroundView = nil;
 	
 	// init references
 	references = [[NSMutableArray alloc] init];
@@ -210,6 +209,7 @@
 	// configure
 	cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0]; 
 	cell.textLabel.textColor = [UIColor colorWithRed:63.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
+    cell.backgroundColor = [UIColor whiteColor];
 	
 	// credits
 	Credit *c;

@@ -67,7 +67,7 @@
     
     // table
 	self.tableView.scrollEnabled = NO;
-	self.tableView.backgroundView = nil;
+    self.tableView.backgroundView = nil;
 
 }
 
